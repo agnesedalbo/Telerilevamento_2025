@@ -55,6 +55,72 @@ plot(mato2006[[1]], col=mako(100))
 # Tree:          NIR=255 (8 bit), red=0 (8 bit), DVI=NIR-red=255-0=255
 # Stressed Tree: NIR=100 (8 bit), red=30 (8 bit), DVI=NIR-red=100-30=70 
 
+# Calculating DVI
+im.multiframe(1,2)
+plot(mato1992)
+plot(mato2006)
+
+# 1 = NIR
+# 2= red
+
+dvi1992=mato1992[[1]]-mato1992[[2]] #NIR - red
+plot(dvi1992)
+
+# range DVI
+# maximum: NIR - red = 255 - 0 = 255
+# minimum: NIR - red = 0 - 255 = -255
+
+# Per cambiare la visualizzazione del dato
+plot(dvi1992, col=mako(100))
+
+dvi2006=mato2006[[1]]-mato2006[[2]]
+plot(dvi2006, col=mako(100))
+
+im.multiframe(1,2)
+plot(dvi1992, col=mako(100))
+plot(dvi2006, col=mako(100))
+
+# Consideriamo due immagini con diversi livelli di risoluzione radiometrica (n° di bit)
+# Queste non sono paragonabili, perchè hanno un range di risoluzione diversa
+
+# DVI 8 bit (0-255): range 
+# maximum: NIR - red = 255 - 0 = 255
+# minimum: NIR - red = 0 - 255 = -255
+
+# DVI 4 bit (0-15): range 
+# maximum: NIR - red = 15 - 0 = 15
+# minimum: NIR - red = 0 - 15 = -15
+
+# Per ovviare questo problema, si usa un altro indice, detto NDVI
+# NDVI 8 bit (0-255): range 
+# maximum: (NIR - red)/(NIR + red) = (255 - 0)/(255 + 0) = 1
+# minimum: (NIR - red)/(NIR + red) = (0 - 255)/(0 + 255) = -1
+
+# NDVI 4 bit (0-15): range 
+# maximum: (NIR - red)/(NIR + red) = (15 - 0)/(15 + 0) = 1
+# minimum: (NIR - red)/(NIR + red) = (0 - 15)/(0 + 15) = -1
+
+im.multiframe(1,2)
+ndvi1992 = (mato1992[[1]] - mato1992[[2]])/(mato1992[[1]] + mato1992[[2]]) # Il numeratore si può sostiuire anche come dvi1992
+plot(ndvi1992, col=inferno(100))
+
+ndvi2006 = (mato2006[[1]] - mato2006[[2]])/(mato2006[[1]] + mato2006[[2]])
+plot(ndvi2006, col=inferno(100))
+
+# Esistono delle funzioni in imageRy apposite: il risultato finale è lo stesso, ma con le funzioni è più veloce
+# Per calcolare il DVI: im.dvi(nome immagine, banda NIR, banda red)
+dvi1992auto = im.dvi(mato1992, 1, 2)
+plot(dvi1992auto)
+
+dvi2006auto = im.dvi(mato2006, 1, 2)
+plot(dvi2006auto)
+
+# Per calcolare l'NDVI: im.ndvi(nome immagine, banda NIR, banda red)
+ndvi1992auto = im.ndvi(mato1992, 1, 2)
+plot(ndvi1992auto)
+
+ndvi2006auto = im.ndvi(mato2006, 1, 2)
+plot(ndvi2006auto)
 
 
 
