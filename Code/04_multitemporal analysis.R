@@ -35,6 +35,8 @@ plot(grdif)
 #-----
 
 # Exporting data
+setwd("C:\\utente\Downloads") 
+setwd("C://utente/Downloads") 
 setwd("/users/magda/Documents")
 # Windowds users: C://comp/Downloads
 # \
