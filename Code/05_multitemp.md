@@ -15,4 +15,4 @@ grdif = gr[[4]] - gr[[1]]
 
 This will create the following output images:
 
-<img src="../Pics/difgreen.jpeg" width=100% />
+<img src="../Pics/output.jpeg" width=100% />
