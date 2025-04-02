@@ -1,7 +1,11 @@
 # R code for classifying images
 
+# install.packages("patchwork") 
+
 library(terra)
 library(imageRy)
+library(ggplot2)
+library(patchwork)
 
 im.list()
 
@@ -35,4 +39,34 @@ perc2006 = freq(mato2006c) * 100 / ncell(mato2006c)
 # human = 55%
 # forest = 45%
 
+# Creating dataframe
+
+class = c("Forest","Human")
+y1992 = c(83,17)
+y2006 = c(45,55)
+tabout = data.frame(class, y1992, y2006)
+
+p1 = ggplot(tabout, aes(x=class, y=y1992, color=class)) + 
+  geom_bar(stat="identity", fill="white") + 
+  ylim(c(0,100))
+
+p2 = ggplot(tabout, aes(x=class, y=y2006, color=class)) + 
+  geom_bar(stat="identity", fill="white") + 
+  ylim(c(0,100))
+
+p1 + p2
+
+# Horizontal bars
+
+p1 = ggplot(tabout, aes(x=class, y=y1992, color=class)) + 
+  geom_bar(stat="identity", fill="white") + 
+  ylim(c(0,100)) + 
+  coord_flip()
+
+p2 = ggplot(tabout, aes(x=class, y=y2006, color=class)) + 
+  geom_bar(stat="identity", fill="white") + 
+  ylim(c(0,100)) + 
+  coord_flip()
+
+p1 / p2
 
