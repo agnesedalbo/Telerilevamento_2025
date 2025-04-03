@@ -70,3 +70,43 @@ p2 = ggplot(tabout, aes(x=class, y=y2006, color=class)) +
 
 p1 / p2
 
+# ---- Solar orbiter 
+
+im.list()
+
+solar = im.import("Solar_Orbiter_s_first_views_of_the_Sun_pillars.jpg")
+
+# Exercise: classify the image in three classes 
+solarc = im.classify(solar, num_clusters=3)
+
+# Exercise: plot the original image beside the classified one
+dev.off()
+im.multiframe(1,2)
+plot(solar)
+plot(solarc)
+
+# 1 = low
+# 2 = medium 
+# 3 = high 
+
+solarcs = subst(solarc, c(1,2,3), c("low", "medium", "high"))
+plot(solarcs)
+solarcs = subst(solarc, c(1,2,3), c("c1_low", "c2_medium", "c3_high")) #così sono in ordine alfabetico
+plot(solarcs)
+
+# Exercise: calculate the percentages of the Sun energy classes with one line code 
+percsolar = freq(solarcs)$count * 100 / ncell(solarcs)
+
+# 37.33349 41.44658 21.21993
+# 38 41 21
+
+# create dataframe 
+class = c("c1_low","c2_medium","c3_high")
+perc = c(38,41,21)
+tabsol = data.frame(class, perc)
+
+# final ggplot 
+
+ggplot(tabsol, aes(x=class, y=perc, fill= class, color=class)) + 
+  geom_bar(stat="identity") + 
+  ylim(c(0,100)) 
