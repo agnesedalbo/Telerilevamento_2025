@@ -87,3 +87,77 @@ p3 + p1
 p3 = ggRGB(sent, r=1, g=2, b=3)
 
 
+# What to do in case of huge images 
+sent = im.import("sentinel.png")
+sent = flip(sent)
+
+ncell(sent) * nlyr(sent) 
+
+# 794 * 798
+# 2534448
+
+senta = aggregate(sent, fact=2)
+ncell(senta) * nlyr(senta) 
+# 633612
+
+senta5 = aggregate(sent, fact=5)
+ncell(senta5) * nlyr(senta5) 
+# 101760
+
+# Exercise: make a multiframe and plot in RGB the three images 
+im.multiframe(1,3)
+im.plotRGB(sent, r=1, g=2, b=3)
+im.plotRGB(senta, 1 ,2 ,3)
+im.plotRGB(senta5, 1, 2, 3)
+
+# Calculating standard deviation
+nira = senta[[1]]
+sd3a = focal(nira, w=c(3,3), fun="sd")
+
+# Exercise: calculating the standard deviation for the factor 5 image
+nira5 = senta[[1]]
+sd3a5 = focal(nira5, w=c(3,3), fun="sd")
+
+sd5a5 = focal(nira5, w=c(5,5), fun="sd")
+
+im.multiframe(1,2)
+plot(sd5a5)
+plot(sd3a)
+
+im.multiframe(2,2)
+plot(sd3)
+plot(sd3a)
+plot(sd3a5)
+plot(sd5a5)
+
+p1 = im.ggplot(sd3)
+p2 = im.ggplot(sd3a)
+p3 = im.ggplot(sd3a5)
+p4 = im.ggplot(sd5a5)
+
+p1 + p2 + p3 + p4
+
+im.multiframe(2,2)
+plot(sd3, col=plasma(100))
+plot(sd3a, col=plasma(100))
+plot(sd3a5, col=plasma(100))
+plot(sd5a5, col=plasma(100))
+
+# Variance
+# nir 
+var3 = sd3^2
+
+plot(var3)
+
+im.multiframe(1,2)
+plot(sd3)
+plot(var3)
+
+sd5 = focal(nir, w=c(5,5), fun="sd")
+var5 = sd5^2
+plot(sd5)
+plot(var5)
+
+
+
+
