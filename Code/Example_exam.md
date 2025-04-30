@@ -36,6 +36,7 @@ plot(dustindex)
 ```
 
 The output image is the following: 
+
 ![dustindex](https://github.com/user-attachments/assets/1d99d740-0f43-4f7a-b50f-a0ddb78321fe)
 
 ## Correlation of bands 
