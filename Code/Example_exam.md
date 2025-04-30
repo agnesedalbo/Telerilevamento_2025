@@ -15,7 +15,7 @@ library(viridis) # used to change the color ramp palette
 Setting the working directory and import the data
 
 ```r
-sewd("~/Desktop"/) # for Windows users change the back slash\ to slash /
+sewd("~/Desktop/) # for Windows users change the back slash\ to slash /
 dust= rast("dust.jpg
 plot(dust)
 dust = flip(dust)
