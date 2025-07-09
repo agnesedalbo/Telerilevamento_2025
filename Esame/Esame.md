@@ -205,11 +205,11 @@ library(ggridges) #pacchetto che permette di creare i plot ridgeline
 ```
 Per prima cosa è stata settata la working directory e poi sono state importate e visualizzate le immagini. 
 ```r
-setwd("C:/Users/magda/OneDrive/Documents/UNIBO/telerilevamento/esame/") #working directory in cui ho salvato il file da importare
-preincendio= rast("preincendio_2022.tif") #importo e nomino il raster
-plot(preincendio) #plot che mi permette di visualizzare l'immagine
-plotRGB(preincendio, r = 1, g = 2, b = 3, stretch = "lin", main = "pre_incendio") #plot RGB per visualizzare l'immagine nello spettro del visibile
-dev.off()
+setwd("C:/Users/magda/OneDrive/Documents/UNIBO/telerilevamento/esame/") #impostazione della working directory da cui importare l'immagine salvata 
+preincendio= rast("preincendio_2022.tif") #per importare e nominare il raster
+plot(preincendio) #per visualizzare l'immagine
+plotRGB(preincendio, r = 1, g = 2, b = 3, stretch = "lin", main = "pre_incendio") #per visualizzare l'immagine a veri colori
+dev.off() #per chiudere il pannello di visualizzazione delle immagini
 ```
 ![image](https://github.com/user-attachments/assets/cc0f7ce6-2a5c-4342-9ed5-3fd51670301a)
 
@@ -218,5 +218,116 @@ dev.off()
 ![image](https://github.com/user-attachments/assets/e4cfa80c-f999-4fb1-bc50-b4559a0cb3fc)
 
 > *L'immagine a veri colori*
+
+Lo stesso è stato fatto per l'immagine post incendio. 
+
+```r
+postincendio= rast("postincendio_2022.tif") #per importare e nominare il raster
+plot(postincendio) #per visualizzare l'immagine
+plotRGB(postincendio, r = 1, g = 2, b = 3, stretch = "lin", main = "post_incendio") #per visualizzare l'immagine a veri colori
+dev.off() #per chiudere il pannello
+```
+
+![image](https://github.com/user-attachments/assets/0f09ace9-d8ce-4ba1-854b-d445f3fcdc3f)
+> *L'immagine nelle 4 bande*
+
+![image](https://github.com/user-attachments/assets/d7bee9fa-8514-4639-939b-58d062174596)
+
+> *L'immagine a veri colori*
+
+E' stato ora creato un pannello multiframe per visualizzare le immagini affiancate.
+
+```r
+im.multiframe(1,2) #funzione per creare un pannello multiframe per visualizzare le immagini affiancate 
+plotRGB(preincendio, r = 1, g = 2, b = 3, stretch = "lin", main = "pre_incendio") #prima immagine da inserire nel pannello multiframe 
+plotRGB(postincendio, r = 1, g = 2, b = 3, stretch = "lin", main = "post_incendio") #seconda immagine da inserire nel pannello
+dev.off()
+```
+![image](https://github.com/user-attachments/assets/14b13df1-2c47-4935-831d-3e6cb5428858)
+> *Le immagini a veri colori pre e post incendio*
+
+E poi un multiframe per le 4 bande 
+
+```r
+im.multiframe(2,4) 
+plot(preincendio[[1]], col = magma(100), main = "Pre - Banda 1")
+plot(preincendio [[2]], col = magma(100), main = "Pre - Banda 2")
+plot(preincendio [[3]], col = magma(100), main = "Pre - Banda 3")
+plot(preincendio [[4]], col = magma(100), main = "Pre - Banda 8")
+
+plot(postincendio[[1]], col = magma(100), main = "Post - Banda 1")
+plot(postincendio [[2]], col = magma(100), main = "Post - Banda 2")
+plot(postincendio [[3]], col = magma(100), main = "Post - Banda 3")
+plot(postincendio [[4]], col = magma(100), main = "Post - Banda 8")
+dev.off()
+```
+![image](https://github.com/user-attachments/assets/111fd111-fa4e-42cd-a316-26f9248373d6)
+
+## 4. Indici spaziali 
+Per valutare l'impatto dell'incendio sono stati valutati gli indici **DVI** e **NDVI**. Il primo (Difference Vegetation Index) misura la densità e la biomassa della vegetazione. Più è alto il valore del DVI, più abbondante è la vegetazione. 
+Si calcola come: **DVI = NIR - Red**, dove NIR è la riflettanza nel vicino infrarosso e Red la riflettanza nella banda rossa. 
+Mentre l'NDVI (Normalized Difference Vegetation Index) serve per valutare la salute della vegetazione prima e dopo l’incendio. Si calcola come: **NDVI= (NIR-Red)/(NIR+Red)**. Valori tra 0.6 e 0.3 indicano una vegetazione sana, valori tra 0.3 e 0.1 una vegetazione rada e valori vicino allo 0 l'assenza di vegetazione. 
+
+Il codice usato in **R** è stato il seguente:
+
+```r
+DVIpre = preincendio[[4]] - postincendio[[1]] 
+plot(DVIpre)
+plot(DVIpre, stretch = "lin", main = "NDVIpre", col=inferno(100))
+dev.off()
+
+DVIpost = postincendio[[4]] - postincendio[[1]] 
+plot(DVIpost)
+plot(DVIpost, stretch = "lin", main = "NDVIpre", col=inferno(100))
+dev.off()
+
+im.multiframe(1,2)
+plot(DVIpre, stretch = "lin", main = "DVIpre", col=inferno(100))
+plot(DVIpost, stretch = "lin", main = "DVIpost", col=inferno(100))
+dev.off()
+```
+​![image](https://github.com/user-attachments/assets/5870638a-28b7-4ea5-9695-58a2f858c589)
+> *Dall'immagine risulta già una certa differenza specialmente nella zona in altro a destra*
+
+Lo stesso è stato fatto per l'**NDVI**
+
+```r
+NDVIpre = (preincendio[[4]] - preincendio[[1]]) / (preincendio[[4]] + preincendio[[1]]) 
+plot(NDVIpre, stretch = "lin", main = "NDVIpre", col=inferno(100))
+dev.off()
+ 
+NDVIpost = (postincendio[[4]] - postincendio[[1]]) / (postincendio[[4]] + postincendio[[1]]) 
+plot(NDVIpost, stretch = "lin", main = "NDVIpost", col=inferno(100))
+dev.off()
+ 
+im.multiframe(1,2)
+plot(NDVIpre, stretch = "lin", main = "NDVIpre", col=inferno(100))
+plot(NDVIpost, stretch = "lin", main = "NDVIpost", col=inferno(100))
+dev.off()
+```
+![image](https://github.com/user-attachments/assets/e6afb50d-844a-4901-8f36-92a4156524d2)
+> *Anche qui nel post incendio l'immagine diventa più scusa, indice che l'NDVI ha valori più vicini allo 0 e che quindi la vegetazione è stata compromessa*
+
+Per visualizzare entrambi gli indici, prima e dopo l'incendio è stato creato un pannello multiframe: 
+
+```r
+im.multiframe(2,2)
+plot(DVIpre, stretch = "lin", main = "DVIpre", col=inferno(100))
+plot(DVIpost, stretch = "lin", main = "DVIpost", col=inferno(100))
+plot(NDVIpre, stretch = "lin", main = "NDVIpre", col=inferno(100))
+plot(NDVIpost, stretch = "lin", main = "NDVIpost", col=inferno(100))
+dev.off()
+```
+![image](https://github.com/user-attachments/assets/462b4f35-bf8c-4c26-be2d-2def002c4026)
+
+
+
+
+
+
+
+
+
+
 
 
