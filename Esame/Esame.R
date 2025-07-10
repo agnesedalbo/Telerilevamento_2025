@@ -22,6 +22,19 @@ plotRGB(preincendio, r = 1, g = 2, b = 3, stretch = "lin", main = "pre_incendio"
 plotRGB(postincendio, r = 1, g = 2, b = 3, stretch = "lin", main = "post_incendio")
 dev.off()
 
+im.multiframe(2,4) 
+plot(preincendio[[1]], col = magma(100), main = "Pre - Banda 1")
+plot(preincendio [[2]], col = magma(100), main = "Pre - Banda 2")
+plot(preincendio [[3]], col = magma(100), main = "Pre - Banda 3")
+plot(preincendio [[4]], col = magma(100), main = "Pre - Banda 8")
+
+plot(postincendio[[1]], col = magma(100), main = "Post - Banda 1")
+plot(postincendio [[2]], col = magma(100), main = "Post - Banda 2")
+plot(postincendio [[3]], col = magma(100), main = "Post - Banda 3")
+plot(postincendio [[4]], col = magma(100), main = "Post - Banda 8")
+dev.off()
+
+
 
 
 
