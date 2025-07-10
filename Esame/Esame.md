@@ -196,7 +196,7 @@ Export.image.toDrive({
 ## 3. Analisi delle immagini 
 Una volta scaricate le immagini satellitari queste sono state importate su **R** per poter fare un'analisi dettagliata. 
 
-Per lo sttudio stati usati e caricati in R i seguenti pacchetti: 
+Per lo studio sono stati usati e caricati in R i seguenti pacchetti: 
 ``` r
 library(terra) #pacchetto utilizzato per l'importazione di immagini in formato .tif e altre funzioni successive
 library(imageRy) #pacchetto per l'utilizzo della funzione im.plotRGB() per la visualizzazione delle immagini; e le funzioni im.dvi() e im.ndvi()
@@ -338,19 +338,19 @@ dev.off()
 Per visualizzare graficamente la frequenza dei pixel di ogni immagine per ciascun valore di NDVI si è poi fatta un'**analisi ridgeline** dei valori di **NDVI nel pre e nel post incendio**. Questa permette appunto di creare due **curve di distribuzione** con cui diventa possibile apprezzare eventuali variazioni nel tempo nella frequenza di NDVI.
 
 ```r  
-incendio_rl = c(NDVIpre, NDVIpost)                # creo vettore che ha come elementi le due immagini croppate ndvi
-names(incendio_rl) =c("NDVI_pre", "NDVI_post")          # creo vettore con i nomi relativi alle immagini
+incendio_rl = c(NDVIpre, NDVIpost)      #per creare vettore che ha come elementi le due immagini NDVI
+names(incendio_rl) =c("NDVI_pre", "NDVI_post")          #per creare vettore con i nomi relativi alle immagini
 
-im.ridgeline(incendio_rl, scale=1, palette="viridis")    # applico la funzione im.ridgeline
+im.ridgeline(incendio_rl, scale=1, palette="viridis")  
 dev.off()
 ```
-![image](https://github.com/user-attachments/assets/eec48efe-4546-43a7-a283-a83c54a1524e)
-> *Il grafico ridgeline mostra la distribuzione dei valori di NDVI, nel grafico che mostra l'andamento prima dell'incendio si vede come i valori di NDVI >0.75 siano molto maggiori rispetto al grafico successivo all'incendio. Nel secondo grafico inoltre aumentano i valori di NDVI più bassi e ciò conferma l'impatto subito*
+![image](https://github.com/user-attachments/assets/a5b1799f-56cc-4321-8ce2-ccd259e79c9d)
+> *Il grafico ridgeline mostra la distribuzione dei valori di NDVI, per quanto riguarda l'andamento prima dell'incendio si vede come i valori di NDVI >0.75 sono molto maggiori rispetto al grafico successivo all'incendio. Nel secondo grafico inoltre aumentano i valori di NDVI più bassi e ciò conferma l'impatto subito*
 
 Per visualizzare la **variazione percentuale di NDVI** nell'area interessata dall'incendio è stato creato un **grafico a barre** tramite il pacchetto **ggplot2**. Questo permette di suddividere tutti i pixel di ciascuna immagine in **due classi** a seconda dei loro valori, in questo caso valori elevati di NDVI (vegetazione) e bassi (vegetazione scarsa/assente), per poi confrontarli graficamente.
 
 ```r
-preincendio_class = im.classify(NDVIpre, num_clusters=2)            # divido i pixel di ogni immagine in due classi a seconda dei valori
+preincendio_class = im.classify(NDVIpre, num_clusters=2)            
 postincendio_class = im.classify(NDVIpost, num_clusters=2)
 
 im.multiframe(2,2)
@@ -360,13 +360,39 @@ plot(preincendio_class - postincendio_class, main = "Differenza NDVI pre e post 
 dev.off()
 ```
 ![image](https://github.com/user-attachments/assets/1d7b8b4b-fe74-4b32-9e90-32c86b6095f0)
+> *I pixel sono stati suddivisi in due classi (1 e 2), e paragonando queste immagini a quelle NDVI dell'area si vede che la classe 1 corrisponde a valori bassi di NDVI e quella 2 a valori elevati.*
 
+```r
+perc_pre_c = freq(preincendio_class) * 100 / ncell(preincendio_class)     #per calcolare la frequenza percentuale di ciascun cluster
+perc_pre_c                                                              #per visualizzare la frequenza percentuale
+      layer                        value                       count
+1   0.0002251492    0.0002251492    19.25048
+2   0.0002251492    0.0004502983    80.74952
+perc_post_c = freq(postincendio_class) * 100 / ncell(postincendio_class)
+perc_post_c
+        layer                        value                       count
+1     0.0002251492    0.0002251492    25.70821
+2     0.0002251492    0.0004502983    74.29179
 
+NDVI = c("elevato", "basso") #per creare vettore con i nomi dei due cluster
+pre = c(80.75, 19.25)  #per creare vettore con le percentuali per il prima e dopo incendio
+post = c(74.30, 25.70)
+tabout = data.frame(NDVI, pre, post)  #per creare dataframe con i valori di NDVI per pre e post  e visualizzarlo
+tabout
+        NDVI         pre            post 
+    1   elevato      80.75          74.30
+    2   basso        19.25          25.70
 
+ggplotpreincendio = ggplot(tabout, aes(x=NDVI, y=pre, fill=NDVI, color=NDVI)) + geom_bar(stat="identity") + ylim(c(0,100))
+ggplotpostincendio = ggplot(tabout, aes(x=NDVI, y=post, fill=NDVI, color=NDVI)) + geom_bar(stat="identity") + ylim(c(0,100))
+ggplotpreincendio + ggplotpostincendio + plot_annotation(title = "Valori NDVI (espressi in superficie) nell'area interessata dall’incendio")    # creo un plot con i due grafici, plot annotation mi serve per aggiungere un titolo
+dev.off()
+```
+![image](https://github.com/user-attachments/assets/3abe42f4-5a51-4dc4-83cf-f5d831910ec8)
+> *I valori di NDVI elevati (indici di una vegetazione sana) sono diminuiti nel post incendio rispetto al prima, mentre quelli bassi sono aumentati.*
 
 ## 6. Risultati e conclusioni 
-
-
+Le analisi hanno confermato quanto atteso: l'incendio ha compromesso parte della vegetazione. Il calcolo degli indici spettrali DVI ed NDVI e soprattutto la loro visualizzazione grafica evidenzia come nei mesi successivi all'incendio ci sia stata una diminuzione di vegetazione sana. 
 
 
 
