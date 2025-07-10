@@ -394,8 +394,7 @@ dev.off()
 ## 6. Risultati e conclusioni 
 Le analisi hanno confermato quanto atteso: l'incendio ha compromesso parte della vegetazione. Il calcolo degli indici spettrali DVI ed NDVI e soprattutto la loro visualizzazione grafica evidenzia come nei mesi successivi all'incendio ci sia stata una diminuzione di vegetazione sana. 
 
-
-
+![image](https://github.com/user-attachments/assets/0906bcae-6576-4ddd-afa4-bf41bb605469)
 
 
 
