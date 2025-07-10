@@ -392,15 +392,16 @@ dev.off()
 ![image](https://github.com/user-attachments/assets/3abe42f4-5a51-4dc4-83cf-f5d831910ec8)
 > *I valori di NDVI elevati (indici di una vegetazione sana) sono diminuiti nel post incendio rispetto al prima, mentre quelli bassi sono aumentati.*
 
+Per capire nel passato più remoto come la vegetazione ha risposto è stata ricavata allo stesso modo un'immagine satellitare dell'area colpita dall'incendio ma un anno dopo ('2023-07-31', '2023-08-31'). Replicando le stesse analisi quello che si è ottenuto è che un anno dopo la situazione è tornata simile a quella prima dell'impatto, per alcuni aspetti è anche migliorata. Ciò è dovuto probabilmente al fatto che l'area colpita dall'incendio nel 2022 presentava già una vegetazione secca a causa delle elevate temperature che da molto interessavano la zona. 
+
+![image](https://github.com/user-attachments/assets/16e3923d-bf8c-4255-912f-7ebc4ac3b50f)
+> *Si noti come i valori di NDVI del 2023 siano tornati simili a quelli della situazione pre impatto, se non addirittura aumentati per quanto riguarda i valori elevati (indice di una vegetazione sana) e diminuiti per quanto riguarda quelli bassi (indice di una vegetazione compromessa).*
+
 ## 6. Risultati e conclusioni 
 Le analisi hanno confermato quanto atteso: l'incendio ha compromesso parte della vegetazione. Il calcolo degli indici spettrali DVI ed NDVI e soprattutto la loro visualizzazione grafica evidenzia come nei mesi successivi all'incendio ci sia stata una diminuzione di vegetazione sana. 
 
 ![image](https://github.com/user-attachments/assets/0906bcae-6576-4ddd-afa4-bf41bb605469)
 
-Per capire nel passato più remoto dell'incendio è stata ricavata allo stesso modo un'immagine satellitare nell'area colpita dall'incendio ma un anno dopo ('2023-07-31', '2023-08-31'). Replicando le stesse analisi quello che è stato ottenuto è che a un anno dopo la situazione è tornata simile a quella prima dell'impatto, per alcuni aspetti è anche migliorata. Ciò è dovuto probabilmente al fatto che l'area colpita dall'incendio nel 2022 presentava già una vegetazione secca a causa delle elevate temperature che da molto interessavano la zona. 
-
-![image](https://github.com/user-attachments/assets/16e3923d-bf8c-4255-912f-7ebc4ac3b50f)
-> *Si noti come i valori di NDVI del 2023 siano tornati simili a quelli della situazione pre impatto, se non addirittura aumentati per quanto riguarda i valori elevati (indice di una vegetazione sana) e diminuiti per quanto riguarda quelli bassi (indice di una vegetazione compromessa)*
 
 
 #### SISTEMARE COMMENTI E DISCUSSIONI 
