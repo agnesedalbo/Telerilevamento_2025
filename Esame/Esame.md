@@ -344,7 +344,8 @@ names(incendio_rl) =c("NDVI_pre", "NDVI_post")          #per creare vettore con 
 im.ridgeline(incendio_rl, scale=1, palette="viridis")  
 dev.off()
 ```
-![image](https://github.com/user-attachments/assets/a5b1799f-56cc-4321-8ce2-ccd259e79c9d)
+
+![image](https://github.com/user-attachments/assets/3ccaac6b-fc39-4708-9109-b2ad45fbac25)
 > *Il grafico ridgeline mostra la distribuzione dei valori di NDVI, per quanto riguarda l'andamento prima dell'incendio si vede come i valori di NDVI >0.75 sono molto maggiori rispetto al grafico successivo all'incendio. Nel secondo grafico inoltre aumentano i valori di NDVI più bassi e ciò conferma l'impatto subito*
 
 Per visualizzare la **variazione percentuale di NDVI** nell'area interessata dall'incendio è stato creato un **grafico a barre** tramite il pacchetto **ggplot2**. Questo permette di suddividere tutti i pixel di ciascuna immagine in **due classi** a seconda dei loro valori, in questo caso valori elevati di NDVI (vegetazione) e bassi (vegetazione scarsa/assente), per poi confrontarli graficamente.
