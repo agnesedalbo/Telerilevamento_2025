@@ -198,8 +198,8 @@ Una volta scaricate le immagini satellitari queste sono state importate su **R**
 
 Per lo studio sono stati usati e caricati in R i seguenti pacchetti: 
 ``` r
-library(terra) #pacchetto utilizzato per l'importazione di immagini in formato .tif e altre funzioni successive
-library(imageRy) #pacchetto per l'utilizzo della funzione im.plotRGB() per la visualizzazione delle immagini; e le funzioni im.dvi() e im.ndvi()
+library(terra) #pacchetto utilizzato per l'analisi di dati spaziali con dati vettoriali e raster 
+library(imageRy) #pacchetto per manipolare, visualizzare ed esportare immagini raster 
 library(viridis) #pacchetto per le palette di colori
 library(ggridges) #pacchetto per la creazione di plot ridgeline
 library(ggplot2) #pacchetto per la creazione di grafici a barre
@@ -224,35 +224,34 @@ dev.off() #per chiudere il pannello di visualizzazione delle immagini
 Lo stesso è stato fatto per l'immagine post incendio. 
 
 ```r
-postincendio= rast("postincendio_2022.tif") #per importare e nominare il raster
-plot(postincendio) #per visualizzare l'immagine
-plotRGB(postincendio, r = 1, g = 2, b = 3, stretch = "lin", main = "post_incendio") #per visualizzare l'immagine a veri colori
-dev.off() #per chiudere il pannello
+postincendio= rast("postincendio_2022.tif") 
+plot(postincendio) 
+plotRGB(postincendio, r = 1, g = 2, b = 3, stretch = "lin", main = "post_incendio") 
+dev.off() 
 ```
 
 ![image](https://github.com/user-attachments/assets/0f09ace9-d8ce-4ba1-854b-d445f3fcdc3f)
 > *L'immagine nelle 4 bande*
 
 ![image](https://github.com/user-attachments/assets/d7bee9fa-8514-4639-939b-58d062174596)
-
 > *L'immagine a veri colori*
 
-E' stato ora creato un pannello multiframe per visualizzare le immagini affiancate.
+È stato poi creato un pannello multiframe per visualizzare le immagini affiancate.
 
 ```r
-im.multiframe(1,2) #funzione che apre un pannello multiframe che mi permette di vedere le 2 immagini una affianco all'altra (layout: 1 riga, 2 colonne)
-plotRGB(preincendio, r = 1, g = 2, b = 3, stretch = "lin", main = "pre_incendio")
-plotRGB(postincendio, r = 1, g = 2, b = 3, stretch = "lin", main = "post_incendio")
+im.multiframe(1,2)  #funzione che apre un pannello multiframe che permette di vedere le 2 immagini una affianco all'altra 
+plotRGB(preincendio, r = 1, g = 2, b = 3, stretch = "lin", main = "pre_incendio")  #prima immagine da inserire nel pannello
+plotRGB(postincendio, r = 1, g = 2, b = 3, stretch = "lin", main = "post_incendio")  #seconda immagine da inserire nel pannello
 dev.off()
 ```
 ![image](https://github.com/user-attachments/assets/14b13df1-2c47-4935-831d-3e6cb5428858)
-> *Le immagini a veri colori pre e post incendio*
+> *Le immagini a veri colori pre e post incendio. Nella seconda immagine è chiaramente visibile la zona interessata dall'incendio.*
 
-E poi un multiframe per le 4 bande 
+E poi un multiframe per le 4 bande.
 
 ```r
 im.multiframe(2,4) 
-plot(preincendio[[1]], col = magma(100), main = "Pre - Banda 1")
+plot(preincendio[[1]], col = magma(100), main = "Pre - Banda 1") #si specifica la banda, il colore e il titolo
 plot(preincendio [[2]], col = magma(100), main = "Pre - Banda 2")
 plot(preincendio [[3]], col = magma(100), main = "Pre - Banda 3")
 plot(preincendio [[4]], col = magma(100), main = "Pre - Banda 8")
@@ -264,25 +263,28 @@ plot(postincendio [[4]], col = magma(100), main = "Post - Banda 8")
 dev.off()
 ```
 ![image](https://github.com/user-attachments/assets/111fd111-fa4e-42cd-a316-26f9248373d6)
+> *Anche in questo caso, nella banda 8 corrispondente al NIR si nota la differenza nella zona in alto a destra.*
+
 
 ## 4. Indici spaziali 
-Per valutare l'impatto dell'incendio sono stati valutati gli indici **DVI** e **NDVI**. Il primo (Difference Vegetation Index) misura la densità e la biomassa della vegetazione. Più è alto il valore del DVI, più abbondante è la vegetazione. 
+Per valutare l'impatto dell'incendio sono stati calcolati gli indici **DVI** e **NDVI**. Il primo (Difference Vegetation Index) misura la densità e la biomassa della vegetazione. Più è alto il valore del DVI, più abbondante è la vegetazione. 
 Si calcola come: **DVI = NIR - Red**, dove NIR è la riflettanza nel vicino infrarosso e Red la riflettanza nella banda rossa. 
-Mentre l'NDVI (Normalized Difference Vegetation Index) serve per valutare la salute della vegetazione prima e dopo l’incendio. Si calcola come: **NDVI= (NIR-Red)/(NIR+Red)**. Valori tra 0.6 e 0.3 indicano una vegetazione sana, valori tra 0.3 e 0.1 una vegetazione rada e valori vicino allo 0 l'assenza di vegetazione. 
+Mentre l'NDVI (Normalized Difference Vegetation Index) serve per valutare la salute della vegetazione. 
+Si calcola come: **NDVI= (NIR-Red)/(NIR+Red)**. Valori < 0 rappresentano acque, neve, o superfici artificiali, valori tra 0 e 0.3 indicano aree con scarsa copertura vegetale, valori tra 0.3 e 0.6 corrispondono a praterie, arbusteti o colture agricole in fase di crescita, tra 0.6 e 0.9 indicano foreste dense e rigogliose. 
 
 Per calcolare gli indici in **R** sono state usate le seguenti funzioni provenienti dal pacchetto **imageRy**:
 
 ```r
-DVIpre = im.dvi(preincendio, 4, 1) #per calcolare il DVI (immagine, banda NIR, banda R)
-plot(DVIpre, stretch = "lin", main = "NDVIpre", col=inferno(100))
+DVIpre = im.dvi(preincendio, 4, 1)  #per calcolare il DVI (immagine, banda NIR, banda R)
+plot(DVIpre, stretch = "lin", main = "NDVIpre", col=inferno(100))  #per visualizzare graficamente il risultato, si specificano titolo e colore
 dev.off()
 
-DVIpost = im.dvi(postincendio, 4, 1) #per calcolare il DVI (immagine, banda NIR, banda R)
+DVIpost = im.dvi(postincendio, 4, 1) 
 plot(DVIpost, stretch = "lin", main = "NDVIpost", col=inferno(100))
 dev.off()
 
-im.multiframe(1,2) #per creare pannello multiframe con il DVI pre e post incendio
-plot(DVIpre, stretch = "lin", main = "DVIpre", col=inferno(100))
+im.multiframe(1,2)  #per creare pannello multiframe con il DVI pre e post incendio
+plot(DVIpre, stretch = "lin", main = "DVIpre", col=inferno(100))  
 plot(DVIpost, stretch = "lin", main = "DVIpost", col=inferno(100))
 dev.off()
 ```
@@ -293,14 +295,14 @@ Lo stesso è stato fatto per l'**NDVI**
 
 ```r
 NDVIpre = im.ndvi(preincendio, 4, 1)   #per calcolare l'NDVI
-plot(NDVIpre, stretch = "lin", main = "NDVIpre", col=inferno(100))
+plot(NDVIpre, stretch = "lin", main = "NDVIpre", col=inferno(100))  #per visualizzare graficamente il risultato, si specificano titolo e colore 
 dev.off()
  
-NDVIpost = im.ndvi(postincendio, 4, 1)  #per calcolare l'NDVI
+NDVIpost = im.ndvi(postincendio, 4, 1)  
 plot(NDVIpost, stretch = "lin", main = "NDVIpost", col=inferno(100))
 dev.off()
  
-im.multiframe(1,2)
+im.multiframe(1,2)  #per creare pannello multiframe con l'NDVI pre e post incendio
 plot(NDVIpre, stretch = "lin", main = "NDVIpre", col=inferno(100))
 plot(NDVIpost, stretch = "lin", main = "NDVIpost", col=inferno(100))
 dev.off()
@@ -311,7 +313,7 @@ dev.off()
 Per visualizzare entrambi gli indici, prima e dopo l'incendio è stato creato un pannello multiframe: 
 
 ```r
-im.multiframe(2,2)
+im.multiframe(2,2) #per creare pannello con 2 righe e 2 colonne 
 plot(DVIpre, stretch = "lin", main = "DVIpre", col=inferno(100))
 plot(DVIpost, stretch = "lin", main = "DVIpost", col=inferno(100))
 plot(NDVIpre, stretch = "lin", main = "NDVIpre", col=inferno(100))
@@ -321,37 +323,37 @@ dev.off()
 ![image](https://github.com/user-attachments/assets/462b4f35-bf8c-4c26-be2d-2def002c4026)
 
 ## 5. Analisi multitemporale 
-Per visualizzare meglio l'impatto dell'inendio è stata calcolata la **differenza tra le immagini del prima e del dopo** per quanto riguarda la **banda del rosso** e i valori di **NDVI**.
+Per visualizzare meglio l'impatto dell'incendio è stata calcolata la **differenza tra le immagini del prima e del dopo** per quanto riguarda la **banda del rosso** e i valori di **NDVI**.
 
 ```r
-incendio_diff = preincendio[[1]] - postincendio[[1]]        # calcolo differenza nella banda del rosso tra pre e post incendio
-incendio_diff_ndvi = NDVIpre - NDVIpost   # calcolo differenza NDVI
+incendio_diff = preincendio[[1]] - postincendio[[1]]  #per calcolare differenza nella banda del rosso tra pre e post incendio
+incendio_diff_ndvi = NDVIpre - NDVIpost  #per calcolare differenza NDVI
 
-im.multiframe(1,2)                                      # plotto le due immagini insieme
-plot(incendio_diff, main = "Incendio:\ndifferenza banda del rosso")
-plot(incendio_diff_ndvi, main = "Incendio:\ndifferenza NDVI")
+im.multiframe(1,2)  #per creare pannello multiframe per visualizzare entrambe le immagini
+plot(incendio_diff, main = "Incendio: differenza banda del rosso")
+plot(incendio_diff_ndvi, main = "Incendio: differenza NDVI")
 dev.off()
 ```
 ![image](https://github.com/user-attachments/assets/d8839f29-05d4-401c-809a-f43fdbb1704f)
 > *La seconda immagine mostra chiaramente una macchia di colore diverso in alto a destra, indice di un grande impatto dell'incendio sulla vegetazione*
 
-Per visualizzare graficamente la frequenza dei pixel di ogni immagine per ciascun valore di NDVI si è poi fatta un'**analisi ridgeline** dei valori di **NDVI nel pre e nel post incendio**. Questa permette appunto di creare due **curve di distribuzione** con cui diventa possibile apprezzare eventuali variazioni nel tempo nella frequenza di NDVI.
+Per visualizzare graficamente la frequenza dei pixel di ogni immagine per ciascun valore di NDVI è stata poi fatta un'**analisi ridgeline** dei valori di **NDVI nel pre e nel post incendio**. Questa permette appunto di creare due **curve di distribuzione** con cui diventa possibile osservare eventuali variazioni nel tempo della frequenza di NDVI.
 
 ```r  
-incendio_rl = c(NDVIpre, NDVIpost)      #per creare vettore che ha come elementi le due immagini NDVI
-names(incendio_rl) =c("NDVI_pre", "NDVI_post")          #per creare vettore con i nomi relativi alle immagini
+incendio_rl = c(NDVIpre, NDVIpost)  #per creare vettore che ha come elementi le due immagini NDVI
+names(incendio_rl) =c("NDVI_pre", "NDVI_post")  #per creare vettore con i nomi relativi alle immagini
 
-im.ridgeline(incendio_rl, scale=1, palette="viridis")  
+im.ridgeline(incendio_rl, scale=1, palette="viridis")  #per creare grafico ridgelines 
 dev.off()
 ```
 
 ![image](https://github.com/user-attachments/assets/3ccaac6b-fc39-4708-9109-b2ad45fbac25)
 > *Il grafico ridgeline mostra la distribuzione dei valori di NDVI, per quanto riguarda l'andamento prima dell'incendio si vede come i valori di NDVI >0.75 sono molto maggiori rispetto al grafico successivo all'incendio. Nel secondo grafico inoltre aumentano i valori di NDVI più bassi e ciò conferma l'impatto subito*
 
-Per visualizzare la **variazione percentuale di NDVI** nell'area interessata dall'incendio è stato creato un **grafico a barre** tramite il pacchetto **ggplot2**. Questo permette di suddividere tutti i pixel di ciascuna immagine in **due classi** a seconda dei loro valori, in questo caso valori elevati di NDVI (vegetazione) e bassi (vegetazione scarsa/assente), per poi confrontarli graficamente.
+Per visualizzare la **variazione percentuale di NDVI** nell'area interessata dall'incendio è stato creato un **grafico a barre** tramite il pacchetto **ggplot2**. Questo permette di suddividere tutti i pixel di ciascuna immagine in **due classi** a seconda dei loro valori, in questo caso valori elevati di NDVI (vegetazione sana) e bassi (vegetazione scarsa/assente), per poi confrontarli graficamente.
 
 ```r
-preincendio_class = im.classify(NDVIpre, num_clusters=2)            
+preincendio_class = im.classify(NDVIpre, num_clusters=2)  #per classificare l'immagine           
 postincendio_class = im.classify(NDVIpost, num_clusters=2)
 
 im.multiframe(2,2)
@@ -364,29 +366,33 @@ dev.off()
 > *I pixel sono stati suddivisi in due classi (1 e 2), e paragonando queste immagini a quelle NDVI dell'area si vede che la classe 1 corrisponde a valori bassi di NDVI e quella 2 a valori elevati.*
 
 ```r
-perc_pre_c = freq(preincendio_class) * 100 / ncell(preincendio_class)     #per calcolare la frequenza percentuale di ciascun cluster
-perc_pre_c                                                              #per visualizzare la frequenza percentuale
-      layer                        value                       count
+perc_pre_c = freq(preincendio_class) * 100 / ncell(preincendio_class)  #per calcolare la frequenza percentuale di ciascun cluster
+perc_pre_c  #per visualizzare la frequenza percentuale
+
+    layer           value           count
 1   0.0002251492    0.0002251492    19.25048
 2   0.0002251492    0.0004502983    80.74952
+
 perc_post_c = freq(postincendio_class) * 100 / ncell(postincendio_class)
 perc_post_c
-        layer                        value                       count
+
+      layer           value           count
 1     0.0002251492    0.0002251492    25.70821
 2     0.0002251492    0.0004502983    74.29179
 
 NDVI = c("elevato", "basso") #per creare vettore con i nomi dei due cluster
-pre = c(80.75, 19.25)  #per creare vettore con le percentuali per il prima e dopo incendio
+pre = c(80.75, 19.25)  #per creare vettore con le percentuali per il prima e il dopo incendio
 post = c(74.30, 25.70)
-tabout = data.frame(NDVI, pre, post)  #per creare dataframe con i valori di NDVI per pre e post  e visualizzarlo
+tabout = data.frame(NDVI, pre, post)  #per creare dataframe con i valori di NDVI per pre e post e visualizzarlo
 tabout
+
         NDVI         pre            post 
     1   elevato      80.75          74.30
     2   basso        19.25          25.70
 
-ggplotpreincendio = ggplot(tabout, aes(x=NDVI, y=pre, fill=NDVI, color=NDVI)) + geom_bar(stat="identity") + ylim(c(0,100))
+ggplotpreincendio = ggplot(tabout, aes(x=NDVI, y=pre, fill=NDVI, color=NDVI)) + geom_bar(stat="identity") + ylim(c(0,100))  #per creare ggplot con i valori di NDVI ottenuti 
 ggplotpostincendio = ggplot(tabout, aes(x=NDVI, y=post, fill=NDVI, color=NDVI)) + geom_bar(stat="identity") + ylim(c(0,100))
-ggplotpreincendio + ggplotpostincendio + plot_annotation(title = "Valori NDVI (espressi in superficie) nell'area interessata dall’incendio")    # creo un plot con i due grafici, plot annotation mi serve per aggiungere un titolo
+ggplotpreincendio + ggplotpostincendio + plot_annotation(title = "Valori NDVI (espressi in superficie) nell'area interessata dall’incendio")    #per unire i grafici crati, si specifica il titolo 
 dev.off()
 ```
 ![image](https://github.com/user-attachments/assets/3abe42f4-5a51-4dc4-83cf-f5d831910ec8)
