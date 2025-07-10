@@ -94,6 +94,31 @@ plot(preincendio_class - postincendio_class, main = "Differenza NDVI pre e post 
 dev.off()
 
 
+perc_pre_c = freq(preincendio_class) * 100 / ncell(preincendio_class)     #per calcolare la frequenza percentuale di ciascun cluster
+perc_pre_c                                                              #per visualizzare la frequenza percentuale
+      layer                        value                       count
+1   0.0002251492    0.0002251492    19.25048
+2   0.0002251492    0.0004502983    80.74952
+perc_post_c = freq(postincendio_class) * 100 / ncell(postincendio_class)
+perc_post_c
+        layer                        value                       count
+1     0.0002251492    0.0002251492    25.70821
+2     0.0002251492    0.0004502983    74.29179
+
+NDVI = c("elevato", "basso") #per creare vettore con i nomi dei due cluster
+pre = c(80.75, 19.25)  #per creare vettore con le percentuali per il prima e dopo incendio
+post = c(74.30, 25.70)
+tabout = data.frame(NDVI, pre, post)  #per creare dataframe con i valori di NDVI per pre e post  e visualizzarlo
+tabout
+        NDVI         pre            post 
+    1   elevato      80.75          74.30
+    2   basso        19.25          25.70
+
+ggplotpreincendio = ggplot(tabout, aes(x=NDVI, y=pre, fill=NDVI, color=NDVI)) + geom_bar(stat="identity") + ylim(c(0,100))
+ggplotpostincendio = ggplot(tabout, aes(x=NDVI, y=post, fill=NDVI, color=NDVI)) + geom_bar(stat="identity") + ylim(c(0,100))
+ggplotpreincendio + ggplotpostincendio + plot_annotation(title = "Valori NDVI (espressi in superficie) nell'area interessata dall’incendio")    # creo un plot con i due grafici, plot annotation mi serve per aggiungere un titolo
+dev.off()
+
 
 
 
