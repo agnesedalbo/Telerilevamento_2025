@@ -61,6 +61,13 @@ plot(NDVIpost, stretch = "lin", main = "NDVIpost", col=inferno(100))
 dev.off()
 
 
+im.multiframe(2,2)
+plot(DVIpre, stretch = "lin", main = "DVIpre", col=inferno(100))
+plot(DVIpost, stretch = "lin", main = "DVIpost", col=inferno(100))
+plot(NDVIpre, stretch = "lin", main = "NDVIpre", col=inferno(100))
+plot(NDVIpost, stretch = "lin", main = "NDVIpost", col=inferno(100))
+dev.off()
+
 
 
 
