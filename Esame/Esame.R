@@ -47,6 +47,19 @@ plot(DVIpre, stretch = "lin", main = "DVIpre", col=inferno(100))
 plot(DVIpost, stretch = "lin", main = "DVIpost", col=inferno(100))
 dev.off()
 
+NDVIpre = im.ndvi(preincendio, 4, 1)   #per calcolare l'NDVI
+plot(NDVIpre, stretch = "lin", main = "NDVIpre", col=inferno(100))
+dev.off()
+ 
+NDVIpost = im.ndvi(postincendio, 4, 1)  #per calcolare l'NDVI
+plot(NDVIpost, stretch = "lin", main = "NDVIpost", col=inferno(100))
+dev.off()
+ 
+im.multiframe(1,2)
+plot(NDVIpre, stretch = "lin", main = "NDVIpre", col=inferno(100))
+plot(NDVIpost, stretch = "lin", main = "NDVIpost", col=inferno(100))
+dev.off()
+
 
 
 
