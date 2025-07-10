@@ -34,6 +34,19 @@ plot(postincendio [[3]], col = magma(100), main = "Post - Banda 3")
 plot(postincendio [[4]], col = magma(100), main = "Post - Banda 8")
 dev.off()
 
+DVIpre = im.dvi(preincendio, 4, 1) #per calcolare il DVI (immagine, banda NIR, banda R)
+plot(DVIpre, stretch = "lin", main = "NDVIpre", col=inferno(100))
+dev.off()
+
+DVIpost = im.dvi(postincendio, 4, 1) #per calcolare il DVI (immagine, banda NIR, banda R)
+plot(DVIpost, stretch = "lin", main = "NDVIpost", col=inferno(100))
+dev.off()
+
+im.multiframe(1,2) #per creare pannello multiframe con il DVI pre e post incendio
+plot(DVIpre, stretch = "lin", main = "DVIpre", col=inferno(100))
+plot(DVIpost, stretch = "lin", main = "DVIpost", col=inferno(100))
+dev.off()
+
 
 
 
