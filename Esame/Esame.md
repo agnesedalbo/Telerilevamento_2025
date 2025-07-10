@@ -403,7 +403,7 @@ Per capire nel passato più remoto dell'incendio è stata ricavata allo stesso m
 > *Si noti come i valori di NDVI del 2023 siano tornati simili a quelli della situazione pre impatto, se non addirittura aumentati per quanto riguarda i valori elevati (indice di una vegetazione sana) e diminuiti per quanto riguarda quelli bassi (indice di una vegetazione compromessa)*
 
 
-
+#### SISTEMARE COMMENTI E DISCUSSIONI 
 
 
 
