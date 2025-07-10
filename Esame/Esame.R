@@ -6,3 +6,11 @@ library(ggplot2) #pacchetto per la creazione di grafici a barre
 library(patchwork) #pacchetto per l'unione dei grafici creati con ggplot2
 
 
+setwd("C:/Users/magda/OneDrive/Documents/UNIBO/telerilevamento/esame/") #impostazione della working directory da cui importare l'immagine salvata 
+preincendio= rast("preincendio_2022.tif") #per importare e nominare il raster
+plot(preincendio) #per visualizzare l'immagine
+plotRGB(preincendio, r = 1, g = 2, b = 3, stretch = "lin", main = "pre_incendio") #per visualizzare l'immagine a veri colori
+dev.off() #per chiudere il pannello di visualizzazione delle immagini
+
+
+
