@@ -196,7 +196,7 @@ Export.image.toDrive({
 ## 3. Analisi delle immagini 
 Una volta scaricate le immagini satellitari queste sono state importate su **R** per poter fare un'analisi dettagliata. 
 
-Per lo sttudio stati usati i seguenti pacchetti: 
+Per lo sttudio stati usati e caricati in R i seguenti pacchetti: 
 ``` r
 library(terra) #pacchetto utilizzato per l'importazione di immagini in formato .tif e altre funzioni successive
 library(imageRy) #pacchetto per l'utilizzo della funzione im.plotRGB() per la visualizzazione delle immagini; e le funzioni im.dvi() e im.ndvi()
@@ -240,9 +240,9 @@ dev.off() #per chiudere il pannello
 E' stato ora creato un pannello multiframe per visualizzare le immagini affiancate.
 
 ```r
-im.multiframe(1,2) #funzione per creare un pannello multiframe per visualizzare le immagini affiancate 
-plotRGB(preincendio, r = 1, g = 2, b = 3, stretch = "lin", main = "pre_incendio") #prima immagine da inserire nel pannello multiframe 
-plotRGB(postincendio, r = 1, g = 2, b = 3, stretch = "lin", main = "post_incendio") #seconda immagine da inserire nel pannello
+im.multiframe(1,2) #funzione che apre un pannello multiframe che mi permette di vedere le 2 immagini una affianco all'altra (layout: 1 riga, 2 colonne)
+plotRGB(preincendio, r = 1, g = 2, b = 3, stretch = "lin", main = "pre_incendio")
+plotRGB(postincendio, r = 1, g = 2, b = 3, stretch = "lin", main = "post_incendio")
 dev.off()
 ```
 ![image](https://github.com/user-attachments/assets/14b13df1-2c47-4935-831d-3e6cb5428858)
@@ -270,20 +270,18 @@ Per valutare l'impatto dell'incendio sono stati valutati gli indici **DVI** e **
 Si calcola come: **DVI = NIR - Red**, dove NIR è la riflettanza nel vicino infrarosso e Red la riflettanza nella banda rossa. 
 Mentre l'NDVI (Normalized Difference Vegetation Index) serve per valutare la salute della vegetazione prima e dopo l’incendio. Si calcola come: **NDVI= (NIR-Red)/(NIR+Red)**. Valori tra 0.6 e 0.3 indicano una vegetazione sana, valori tra 0.3 e 0.1 una vegetazione rada e valori vicino allo 0 l'assenza di vegetazione. 
 
-Il codice usato in **R** è stato il seguente:
+Per calcolare gli indici in **R** sono state usate le seguenti funzioni provenienti dal pacchetto **imageRy**:
 
 ```r
-DVIpre = preincendio[[4]] - postincendio[[1]] 
-plot(DVIpre)
+DVIpre = im.dvi(preincendio, 4, 1) #per calcolare il DVI (immagine, banda NIR, banda R)
 plot(DVIpre, stretch = "lin", main = "NDVIpre", col=inferno(100))
 dev.off()
 
-DVIpost = postincendio[[4]] - postincendio[[1]] 
-plot(DVIpost)
-plot(DVIpost, stretch = "lin", main = "NDVIpre", col=inferno(100))
+DVIpost = im.dvi(postincendio, 4, 1) #per calcolare il DVI (immagine, banda NIR, banda R)
+plot(DVIpost, stretch = "lin", main = "NDVIpost", col=inferno(100))
 dev.off()
 
-im.multiframe(1,2)
+im.multiframe(1,2) #per creare pannello multiframe con il DVI pre e post incendio
 plot(DVIpre, stretch = "lin", main = "DVIpre", col=inferno(100))
 plot(DVIpost, stretch = "lin", main = "DVIpost", col=inferno(100))
 dev.off()
@@ -294,11 +292,11 @@ dev.off()
 Lo stesso è stato fatto per l'**NDVI**
 
 ```r
-NDVIpre = (preincendio[[4]] - preincendio[[1]]) / (preincendio[[4]] + preincendio[[1]]) 
+NDVIpre = im.ndvi(preincendio, 4, 1)   #per calcolare l'NDVI
 plot(NDVIpre, stretch = "lin", main = "NDVIpre", col=inferno(100))
 dev.off()
  
-NDVIpost = (postincendio[[4]] - postincendio[[1]]) / (postincendio[[4]] + postincendio[[1]]) 
+NDVIpost = im.ndvi(postincendio, 4, 1)  #per calcolare l'NDVI
 plot(NDVIpost, stretch = "lin", main = "NDVIpost", col=inferno(100))
 dev.off()
  
@@ -322,7 +320,51 @@ dev.off()
 ```
 ![image](https://github.com/user-attachments/assets/462b4f35-bf8c-4c26-be2d-2def002c4026)
 
+## 5. Analisi multitemporale 
+Per visualizzare meglio l'impatto dell'inendio è stata calcolata la **differenza tra le immagini del prima e del dopo** per quanto riguarda la **banda del rosso** e i valori di **NDVI**.
 
+```r
+incendio_diff = preincendio[[1]] - postincendio[[1]]        # calcolo differenza nella banda del rosso tra pre e post incendio
+incendio_diff_ndvi = NDVIpre - NDVIpost   # calcolo differenza NDVI
+
+im.multiframe(1,2)                                      # plotto le due immagini insieme
+plot(incendio_diff, main = "Incendio:\ndifferenza banda del rosso")
+plot(incendio_diff_ndvi, main = "Incendio:\ndifferenza NDVI")
+dev.off()
+```
+![image](https://github.com/user-attachments/assets/d8839f29-05d4-401c-809a-f43fdbb1704f)
+> *La seconda immagine mostra chiaramente una macchia di colore diverso in alto a destra, indice di un grande impatto dell'incendio sulla vegetazione*
+
+Per visualizzare graficamente la frequenza dei pixel di ogni immagine per ciascun valore di NDVI si è poi fatta un'**analisi ridgeline** dei valori di **NDVI nel pre e nel post incendio**. Questa permette appunto di creare due **curve di distribuzione** con cui diventa possibile apprezzare eventuali variazioni nel tempo nella frequenza di NDVI.
+
+```r  
+incendio_rl = c(NDVIpre, NDVIpost)                # creo vettore che ha come elementi le due immagini croppate ndvi
+names(incendio_rl) =c("NDVI_pre", "NDVI_post")          # creo vettore con i nomi relativi alle immagini
+
+im.ridgeline(incendio_rl, scale=1, palette="viridis")    # applico la funzione im.ridgeline
+dev.off()
+```
+![image](https://github.com/user-attachments/assets/eec48efe-4546-43a7-a283-a83c54a1524e)
+> *Il grafico ridgeline mostra la distribuzione dei valori di NDVI, nel grafico che mostra l'andamento prima dell'incendio si vede come i valori di NDVI >0.75 siano molto maggiori rispetto al grafico successivo all'incendio. Nel secondo grafico inoltre aumentano i valori di NDVI più bassi e ciò conferma l'impatto subito*
+
+Per visualizzare la **variazione percentuale di NDVI** nell'area interessata dall'incendio è stato creato un **grafico a barre** tramite il pacchetto **ggplot2**. Questo permette di suddividere tutti i pixel di ciascuna immagine in **due classi** a seconda dei loro valori, in questo caso valori elevati di NDVI (vegetazione) e bassi (vegetazione scarsa/assente), per poi confrontarli graficamente.
+
+```r
+preincendio_class = im.classify(NDVIpre, num_clusters=2)            # divido i pixel di ogni immagine in due classi a seconda dei valori
+postincendio_class = im.classify(NDVIpost, num_clusters=2)
+
+im.multiframe(2,2)
+plot(preincendio_class, main = "Pixel NDVI pre incendio")
+plot(postincendio_class, main = "Pixel NDVI post incendio")
+plot(preincendio_class - postincendio_class, main = "Differenza NDVI pre e post incendio")
+dev.off()
+```
+![image](https://github.com/user-attachments/assets/1d7b8b4b-fe74-4b32-9e90-32c86b6095f0)
+
+
+
+
+## 6. Risultati e conclusioni 
 
 
 
