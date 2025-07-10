@@ -12,5 +12,12 @@ plot(preincendio) #per visualizzare l'immagine
 plotRGB(preincendio, r = 1, g = 2, b = 3, stretch = "lin", main = "pre_incendio") #per visualizzare l'immagine a veri colori
 dev.off() #per chiudere il pannello di visualizzazione delle immagini
 
+postincendio= rast("postincendio_2022.tif") #per importare e nominare il raster
+plot(postincendio) #per visualizzare l'immagine
+plotRGB(postincendio, r = 1, g = 2, b = 3, stretch = "lin", main = "post_incendio") #per visualizzare l'immagine a veri colori
+dev.off() #per chiudere il pannello
+
+
+
 
 
