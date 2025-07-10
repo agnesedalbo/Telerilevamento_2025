@@ -77,6 +77,13 @@ plot(incendio_diff, main = "Incendio:\ndifferenza banda del rosso")
 plot(incendio_diff_ndvi, main = "Incendio:\ndifferenza NDVI")
 dev.off()
 
+incendio_rl = c(NDVIpre, NDVIpost)      #per creare vettore che ha come elementi le due immagini NDVI
+names(incendio_rl) =c("NDVI_pre", "NDVI_post")          #per creare vettore con i nomi relativi alle immagini
+
+im.ridgeline(incendio_rl, scale=1, palette="viridis")  
+dev.off()
+
+
 
 
 
