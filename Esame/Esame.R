@@ -17,6 +17,10 @@ plot(postincendio) #per visualizzare l'immagine
 plotRGB(postincendio, r = 1, g = 2, b = 3, stretch = "lin", main = "post_incendio") #per visualizzare l'immagine a veri colori
 dev.off() #per chiudere il pannello
 
+im.multiframe(1,2) #funzione che apre un pannello multiframe che mi permette di vedere le 2 immagini una affianco all'altra (layout: 1 riga, 2 colonne)
+plotRGB(preincendio, r = 1, g = 2, b = 3, stretch = "lin", main = "pre_incendio")
+plotRGB(postincendio, r = 1, g = 2, b = 3, stretch = "lin", main = "post_incendio")
+dev.off()
 
 
 
