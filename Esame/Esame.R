@@ -69,5 +69,15 @@ plot(NDVIpost, stretch = "lin", main = "NDVIpost", col=inferno(100))
 dev.off()
 
 
+incendio_diff = preincendio[[1]] - postincendio[[1]]        # calcolo differenza nella banda del rosso tra pre e post incendio
+incendio_diff_ndvi = NDVIpre - NDVIpost   # calcolo differenza NDVI
+
+im.multiframe(1,2)                                      # plotto le due immagini insieme
+plot(incendio_diff, main = "Incendio:\ndifferenza banda del rosso")
+plot(incendio_diff_ndvi, main = "Incendio:\ndifferenza NDVI")
+dev.off()
+
+
+
 
 
