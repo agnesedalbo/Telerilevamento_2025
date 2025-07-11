@@ -2,7 +2,7 @@
 #### Agnese Dal Bò
 > ##### matricola n. 1187303
 
-# Incendio sul Carso: analisi pre e post impatto 
+# Incendio sul Carso: analisi pre e post impatto  
 
 ## Indice 
 1. Introduzione e obiettivi dello studio
