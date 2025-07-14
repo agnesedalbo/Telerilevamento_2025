@@ -233,7 +233,7 @@ dev.off() #per chiudere il pannello di visualizzazione delle immagini
 > *L'immagine nelle 4 bande*
 
 <div align="center">
-  <img width="550" height="490" alt="image" src="https://github.com/user-attachments/assets/7c534200-708e-402c-ab5c-bb4c70bd2b71" />
+  <img width="550" height="490" alt="image" src="https://github.com/user-attachments/assets/25d213d7-f9fe-4dbe-86b8-a1f63069239b" />
 </div>
 
 > *L'immagine a veri colori*
@@ -253,7 +253,7 @@ dev.off()
 > *L'immagine nelle 4 bande*
 
 <div align="center">
-  <img width="550" height="490" alt="image" src="https://github.com/user-attachments/assets/d7d187c2-1b21-445a-b44b-a4d3fe4a5775" />
+ <img width="550" height="490" alt="image" src="https://github.com/user-attachments/assets/02f16bf9-8237-4b5e-9ea2-200388010499" />
 </div>
 
 > *L'immagine a veri colori*
