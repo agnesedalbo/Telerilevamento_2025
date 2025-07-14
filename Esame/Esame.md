@@ -223,7 +223,7 @@ Per prima cosa è stata settata la working directory e poi sono state importate 
 setwd("C:/Users/magda/OneDrive/Documents/UNIBO/telerilevamento/esame/") #impostazione della working directory da cui importare l'immagine salvata 
 preincendio= rast("preincendio_2022.tif") #per importare e nominare il raster
 plot(preincendio) #per visualizzare l'immagine
-plotRGB(preincendio, r = 1, g = 2, b = 3, stretch = "lin", main = "pre_incendio") #per visualizzare l'immagine a veri colori
+im.plotRGB(preincendio, r = 1, g = 2, b = 3, title = "pre_incendio") #per visualizzare l'immagine a veri colori
 dev.off() #per chiudere il pannello di visualizzazione delle immagini
 ```
 <div align="center">
@@ -243,7 +243,7 @@ Lo stesso è stato fatto per l'immagine post incendio.
 ```r
 postincendio= rast("postincendio_2022.tif") 
 plot(postincendio) 
-plotRGB(postincendio, r = 1, g = 2, b = 3, stretch = "lin", main = "post_incendio") 
+im.plotRGB(postincendio, r = 1, g = 2, b = 3, title = "post_incendio") 
 dev.off() 
 ```
 <div align="center">
@@ -262,12 +262,12 @@ dev.off()
 
 ```r
 im.multiframe(1,2)  #funzione che apre un pannello multiframe che permette di vedere le 2 immagini una affianco all'altra 
-plotRGB(preincendio, r = 1, g = 2, b = 3, stretch = "lin", main = "pre_incendio")  #prima immagine da inserire nel pannello
-plotRGB(postincendio, r = 1, g = 2, b = 3, stretch = "lin", main = "post_incendio")  #seconda immagine da inserire nel pannello
+im.plotRGB(preincendio, r = 1, g = 2, b = 3, title = "pre_incendio")  #prima immagine da inserire nel pannello
+im.plotRGB(postincendio, r = 1, g = 2, b = 3, title = "post_incendio")  #seconda immagine da inserire nel pannello
 dev.off()
 ```
 <div align="center">
-  <img width="550" height="490" alt="image" src="https://github.com/user-attachments/assets/07847876-0b03-44da-b3cc-fe43bbb9991d" />
+  <img width="550" height="490" alt="image" src="https://github.com/user-attachments/assets/940f9af9-e526-4525-9e35-d0e06f91a179" />
 </div>
 
 > *Le immagini a veri colori pre e post incendio*
@@ -302,7 +302,7 @@ dev.off()
 Per valutare l'impatto dell'incendio sono stati calcolati gli indici **DVI** e **NDVI**. Il primo (Difference Vegetation Index) misura la densità e la biomassa della vegetazione. Più è alto il valore del DVI, più abbondante è la vegetazione. 
 Si calcola come: **$$DVI = NIR - Red$$**, dove NIR è la riflettanza nel vicino infrarosso e Red la riflettanza nella banda rossa. 
 Mentre l'NDVI (Normalized Difference Vegetation Index) serve per valutare la salute della vegetazione. 
-Si calcola come: **$` NDVI = \frac{(NIR - Red)}{(NIR + Red)} `$**.
+Si calcola come: **$NDVI = \frac{(NIR - Red)}{(NIR + Red)}$**.
 Valori < 0 rappresentano acque, neve, o superfici artificiali, valori tra 0 e 0.3 indicano aree con scarsa copertura vegetale, valori tra 0.3 e 0.6 corrispondono a praterie, arbusteti o colture agricole in fase di crescita, tra 0.6 e 0.9 indicano foreste dense e rigogliose. 
 
 Per calcolare gli indici in **R** sono state usate le seguenti funzioni provenienti dal pacchetto **imageRy**:
