@@ -18,9 +18,14 @@ Nell'estate del 2022 la zona del Carso tra Italia e Slovenia è stata interessat
 Gli incendi si sono sviluppati a partire dal 19 luglio del 2022 nell'area di Doberdò del Lago. 
 Per valutare gli impatti a seguito di questo incendio sono quindi state utilizzate delle **immagini satellitari** provenienti dall'area compresa tra **Doberdò del Lago** e **San Martino del Carso**. Per valutare i cambiamenti pre e post impatto sono state scelte immagini tra il **01 giugno** e il **01 luglio 2022** (per il pre) e tra il **31 luglio** e il **31 agosto 2022** (per il post). 
 
-![image](https://github.com/user-attachments/assets/0a8025de-44b7-4975-ab5e-a94c4448007f)
+<div align="center">
+  <img width="1004" height="380" alt="image" src="https://github.com/user-attachments/assets/b6d3f2fd-ca97-4bd8-b030-73ca5241bc95" />
+</div>  
+  
+<div align="center">
+  <img width="1004" height="380" alt="image" src="https://github.com/user-attachments/assets/d349ffb6-81cc-4043-9869-757f0c7108ab" />
+</div>  
 
-![image](https://github.com/user-attachments/assets/2c75d1ea-a632-4698-8125-3d3c48df4319)
 > *L'area di studio*
 
 
@@ -222,13 +227,13 @@ plotRGB(preincendio, r = 1, g = 2, b = 3, stretch = "lin", main = "pre_incendio"
 dev.off() #per chiudere il pannello di visualizzazione delle immagini
 ```
 <div align="center">
-  <img width="555" height="330" alt="image" src="https://github.com/user-attachments/assets/8b577d9b-3254-4435-a9be-83b7ba143558" />
+  <img width="550" height="490" alt="image" src="https://github.com/user-attachments/assets/8b577d9b-3254-4435-a9be-83b7ba143558" />
 </div>
 
 > *L'immagine nelle 4 bande*
 
 <div align="center">
-  <img width="527" height="494" alt="image" src="https://github.com/user-attachments/assets/7c534200-708e-402c-ab5c-bb4c70bd2b71" />
+  <img width="550" height="490" alt="image" src="https://github.com/user-attachments/assets/7c534200-708e-402c-ab5c-bb4c70bd2b71" />
 </div>
 
 > *L'immagine a veri colori*
@@ -242,13 +247,13 @@ plotRGB(postincendio, r = 1, g = 2, b = 3, stretch = "lin", main = "post_incendi
 dev.off() 
 ```
 <div align="center">
-  <img width="561" height="334" alt="image" src="https://github.com/user-attachments/assets/7e10fe2b-705b-4974-a074-7045ac3140d0" />
+  <img width="550" height="490" alt="image" src="https://github.com/user-attachments/assets/7e10fe2b-705b-4974-a074-7045ac3140d0" />
 </div>
 
 > *L'immagine nelle 4 bande*
 
 <div align="center">
-  <img width="528" height="492" alt="image" src="https://github.com/user-attachments/assets/d7d187c2-1b21-445a-b44b-a4d3fe4a5775" />
+  <img width="550" height="490" alt="image" src="https://github.com/user-attachments/assets/d7d187c2-1b21-445a-b44b-a4d3fe4a5775" />
 </div>
 
 > *L'immagine a veri colori*
@@ -262,7 +267,7 @@ plotRGB(postincendio, r = 1, g = 2, b = 3, stretch = "lin", main = "post_incendi
 dev.off()
 ```
 <div align="center">
-  <img width="528" height="284" alt="image" src="https://github.com/user-attachments/assets/07847876-0b03-44da-b3cc-fe43bbb9991d" />
+  <img width="550" height="490" alt="image" src="https://github.com/user-attachments/assets/07847876-0b03-44da-b3cc-fe43bbb9991d" />
 </div>
 
 > *Le immagini a veri colori pre e post incendio*
@@ -286,7 +291,7 @@ plot(postincendio [[4]], col = magma(100), main = "Post - Banda 8")
 dev.off()
 ```
 <div align="center">
-  <img width="641" height="419" alt="image" src="https://github.com/user-attachments/assets/f967f06b-4cd8-44d7-aa93-855cc57a195c" />
+  <img width="550" height="490" alt="image" src="https://github.com/user-attachments/assets/f967f06b-4cd8-44d7-aa93-855cc57a195c" />
 </div>
 
 > [!NOTE]
@@ -317,7 +322,7 @@ plot(DVIpost, stretch = "lin", main = "DVIpost", col=inferno(100))
 dev.off()
 ```
 <div align="center">
-  <img width="540" height="243" alt="image" src="https://github.com/user-attachments/assets/caff8fde-9e54-4554-8737-f25244aeecd9" />
+  <img width="550" height="490" alt="image" src="https://github.com/user-attachments/assets/caff8fde-9e54-4554-8737-f25244aeecd9" />
 </div>
 
 > [!NOTE]
@@ -340,7 +345,7 @@ plot(NDVIpost, stretch = "lin", main = "NDVIpost", col=inferno(100))
 dev.off()
 ```
 <div align="center">
-  <img width="540" height="235" alt="image" src="https://github.com/user-attachments/assets/4bd84640-c6ca-4ecb-8403-8e80646cf817" />
+  <img width="550" height="490" alt="image" src="https://github.com/user-attachments/assets/4bd84640-c6ca-4ecb-8403-8e80646cf817" />
 </div>
 
 >[!NOTE]
@@ -470,7 +475,7 @@ Il confronto con un'immagine satellitare del 2023, un anno dopo l'incendio, ha c
 Questo miglioramento è probabilmente dovuto al fatto che già nei mesi precedenti all'incendio la vegetazione era abbastanza secca oppure al fatto che le specie mettano in atto diverse strategie per rispondere agli impatti. Non tutte sono state infatti danneggiate allo stesso modo. Quando una specie scompare poi, altre prendono il suo posto all'interno dell'habitat allo scopo di mantenere l'ecosistema. 
 
 <div align="center">
-  <img width="1004" height="669" alt="image" src="https://github.com/user-attachments/assets/f32bb9b5-3910-45ea-9851-ed3ad2af9ae6" />
+  <img width="1004" height="669" alt="image" src="https://github.com/user-attachments/assets/6efbda88-695e-44b0-9070-232730d1bcd7" />
 </div>
 
 ### GRAZIE PER L'ATTENZIONE! 
