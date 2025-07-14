@@ -32,7 +32,7 @@ Per valutare gli impatti a seguito di questo incendio sono quindi state utilizza
 ## 2. Raccolta delle immagini 🌐
 Le immagini satellitari utilizzate provengono dal sito di [**Google Earth Engine**](https://earthengine.google.com/).
 
-Per ottenere le immagini dell'area di interesse prima dell'incendio è stato utilizzato il codice fornito durante il corso in **Java Script**. 
+Per ottenere le immagini dell'area di interesse prima dell'incendio è stato utilizzato il codice fornito durante il corso in **JavaScript**. 
 Tale codice riporta una collezione di immagini che vanno **dal 01/06/2022 al 01/07/2022**, selezionando solo immagini con una *copertura nuvolosa <20%* e le *bande relative al rosso, verde, blu e NIR*.
 
 <details>
