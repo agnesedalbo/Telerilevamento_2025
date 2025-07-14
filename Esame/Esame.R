@@ -133,3 +133,71 @@ ggplotpreincendio = ggplot(tabout, aes(x=NDVI, y=pre, fill=NDVI, color=NDVI)) + 
 ggplotpostincendio = ggplot(tabout, aes(x=NDVI, y=post, fill=NDVI, color=NDVI)) + geom_bar(stat="identity") + ylim(c(0,100))
 ggplotpreincendio + ggplotpostincendio + plot_annotation(title = "Valori NDVI (espressi in superficie) nell'area interessata dall’incendio")    #per unire i grafici crati, si specifica il titolo 
 dev.off()
+
+#Per analizzare come l'area ha risposto un'anno dopo l'incendio è stata presa un'immagine satellitare utilizzando lo stesso codice JavaScript ma nel perido 31/07/2023 - 31/08/2023 e sono stati poi seguiti gli stessi passaggi
+setwd("C://Users/gdemo/Desktop/Telerilevamento geoecologico/") 
+postincendio2023= rast("postincendio_2023.tif")
+plot(postincendio2023)
+
+DVIpost2023 = im.dvi(postincendio2023, 4, 1) 
+plot(DVIpost, stretch = "lin", main = "NDVIpost2023", col=inferno(100))
+NDVIpost2023 = im.ndvi(postincendio2023, 4, 1)   #per calcolare l'NDVI
+plot(NDVIpre, stretch = "lin", main = "NDVIpost2023", col=inferno(100))
+
+incendio_diff = preincendio[[1]] - postincendio[[1]]  -postincendio2023[[1]]  
+incendio_diff_ndvi = NDVIpre - NDVIpost -NDVIpost2023 
+
+im.multiframe(1,2)                                     
+plot(incendio_diff, main = "Incendio:\ndifferenza banda del rosso")
+plot(incendio_diff_ndvi, main = "Incendio:\ndifferenza NDVI")
+dev.off()
+incendio_rl = c(NDVIpre, NDVIpost, NDVIpost2023)     
+names(incendio_rl) =c("NDVI_pre", "NDVI_post", "NDVI_post2023")         
+
+im.ridgeline(incendio_rl, scale=1, palette="viridis")  
+dev.off()
+
+preincendio_class = im.classify(NDVIpre, num_clusters=2)            
+postincendio_class = im.classify(NDVIpost, num_clusters=2)
+postincendio2023_class = im.classify(NDVIpost2023, num_clusters=2)
+
+
+im.multiframe(2,2)
+plot(preincendio_class, main = "Pixel NDVI pre incendio")
+plot(postincendio_class, main = "Pixel NDVI post incendio")
+plot(postincendio2023_class, main = "Pixel NDVI post incendio 2023")
+plot(preincendio_class - postincendio_class-postincendio2023_class, main = "Differenza NDVI pre e post incendio")
+dev.off()
+
+perc_pre_c = freq(preincendio_class) * 100 / ncell(preincendio_class)     
+perc_pre_c                                                              
+     layer          value           count
+1   0.0002251492    0.0002251492    19.25048
+2   0.0002251492    0.0004502983    80.74952
+perc_post_c = freq(postincendio_class) * 100 / ncell(postincendio_class)
+perc_post_c
+      layer           value           count
+1     0.0002251492    0.0002251492    25.70821
+2     0.0002251492    0.0004502983    74.29179
+perc_post2023_c = freq(postincendio2023_class) * 100 / ncell(postincendio2023_class)
+perc_post2023_c
+    layer           value           count
+1   0.0002251492    0.0002251492    83.01677
+2   0.0002251492    0.0004502983    16.98323
+
+NDVI = c("elevato", "basso") 
+pre = c(80.75, 19.25)  
+post = c(74.30, 25.70)
+post2023 = c(83.02, 16.98)
+tabout = data.frame(NDVI, pre, post, post2023)  
+tabout
+        NDVI         pre            post 
+    1   elevato      80.75          74.30
+    2   basso        19.25          25.70
+
+ggplotpreincendio = ggplot(tabout, aes(x=NDVI, y=pre, fill=NDVI, color=NDVI)) + geom_bar(stat="identity") + ylim(c(0,100))
+ggplotpostincendio = ggplot(tabout, aes(x=NDVI, y=post, fill=NDVI, color=NDVI)) + geom_bar(stat="identity") + ylim(c(0,100))
+ggplotpostincendio2023 = ggplot(tabout, aes(x=NDVI, y=post2023, fill=NDVI, color=NDVI)) + geom_bar(stat="identity") + ylim(c(0,100))
+ggplotpreincendio + ggplotpostincendio + ggplotpostincendio2023 + plot_annotation(title = "Valori NDVI (espressi in superficie) nell'area interessata dall’incendio")    # creo un plot con i due grafici, plot annotation mi serve per aggiungere un titolo
+dev.off()
+
