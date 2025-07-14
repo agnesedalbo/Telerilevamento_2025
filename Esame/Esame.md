@@ -473,6 +473,7 @@ L'analisi quantitativa ha poi evidenziato come i valori elevati del NIR siano di
 
 Il confronto con un'immagine satellitare del 2023, un anno dopo l'incendio, ha comunque mostrato come l'area abbia ripristinato parte della vegetazione e che gli indici spettrali siano tornati come quelli pre incendio e in parte anche migliorati. 
 Questo miglioramento è probabilmente dovuto al fatto che già nei mesi precedenti all'incendio la vegetazione era abbastanza secca oppure al fatto che le specie mettano in atto diverse strategie per rispondere agli impatti. Non tutte sono state infatti danneggiate allo stesso modo. Quando una specie scompare poi, altre prendono il suo posto all'interno dell'habitat allo scopo di preservare l'ecosistema. 
+
 I cambiamenti climatici e l'aumento delle temperature porteranno a sempre più incendi in futuro. Capire come la vegetazione colpita risponde a questi fenomeni sarà fondamentale per poter intervenire, prevedere e cercare di ripristinare le aree interessate.
 
 <div align="center">
