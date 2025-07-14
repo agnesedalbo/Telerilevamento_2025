@@ -478,4 +478,4 @@ Questo miglioramento è probabilmente dovuto al fatto che già nei mesi preceden
   <img width="1004" height="669" alt="image" src="https://github.com/user-attachments/assets/6efbda88-695e-44b0-9070-232730d1bcd7" />
 </div>
 
-### GRAZIE PER L'ATTENZIONE! 
+### Grazie per l'attenzione! 
