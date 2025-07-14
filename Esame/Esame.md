@@ -2,9 +2,9 @@
 #### Agnese Dal Bò
 > ##### matricola n. 1187303
 
-# Incendio sul Carso: analisi pre e post impatto  
+# Incendio sul Carso: analisi pre e post impatto 🔥
 
-## Indice 
+## Indice 📑
 1. Introduzione e obiettivi dello studio
 2. Raccolta delle immagini 
 3. Analisi delle immagini
@@ -12,24 +12,23 @@
 5. Analisi multitemporale
 6. Risultati e conclusioni
 
-## 1. Introduzione e obiettivi dello studio 
-Nell'esatate del 2022 la zona del Carso tra Italia e Slovenia è stata interessata da vasti incendi che hanno prodotto enormi danni e ingenti perdite a livello di biodiversità. Uno studio condotto dalle Università di Udine e Trieste parla addirittura di quasi 4.100 ettari di superficie forestale inceneriti e circa 
-il 50 per cento della biomassa presente sul territorio interessato dalle fiamme andata perduta.
+## 1. Introduzione e obiettivi dello studio 🎯
+
+Nell'estate del 2022 la zona del Carso tra Italia e Slovenia è stata interessata da vasti incendi che hanno prodotto enormi danni e ingenti perdite a livello di biodiversità. Uno studio condotto dalle Università di Udine e Trieste parla addirittura di quasi 4.100 ettari di superficie forestale inceneriti e circa il 50% della biomassa presente sul territorio interessato dalle fiamme andata perduta.
 Gli incendi si sono sviluppati a partire dal 19 luglio del 2022 nell'area di Doberdò del Lago. 
-Per valutare gli impatti a seguito di questo incendio sono quindi state utilizzate delle **immagini satellitari** provenienti dall'area compresa tra **Doberdò del Lago** e **San Martino del Carso**. Per valutare i cambiamenti pre e post impatto sono state scelte immagini tra il **primo giugno** e il **primo luglio 2022** (per il pre) e tra il **31 luglio** e il **31 agosto 2022** (per il post). 
+Per valutare gli impatti a seguito di questo incendio sono quindi state utilizzate delle **immagini satellitari** provenienti dall'area compresa tra **Doberdò del Lago** e **San Martino del Carso**. Per valutare i cambiamenti pre e post impatto sono state scelte immagini tra il **01 giugno** e il **01 luglio 2022** (per il pre) e tra il **31 luglio** e il **31 agosto 2022** (per il post). 
 
 ![image](https://github.com/user-attachments/assets/0a8025de-44b7-4975-ab5e-a94c4448007f)
 
 ![image](https://github.com/user-attachments/assets/2c75d1ea-a632-4698-8125-3d3c48df4319)
-
 > *L'area di studio*
 
 
-## 2. Raccolta delle immagini 
+## 2. Raccolta delle immagini 🌐
 Le immagini satellitari utilizzate provengono dal sito di [**Google Earth Engine**](https://earthengine.google.com/).
 
 Per ottenere le immagini dell'area di interesse prima dell'incendio è stato utilizzato il codice fornito durante il corso in **Java Script**. 
-Tale codice riporta una collezione di immagini che vanno **dal 2022-06-01 al 2022-07-01**, selezionando solo immagini con una *copertura nuvolosa <20%* e le *bande relative al rosso, verde, blu e NIR*.
+Tale codice riporta una collezione di immagini che vanno **dal 01/06/2022 al 01/07/2022**, selezionando solo immagini con una *copertura nuvolosa <20%* e le *bande relative al rosso, verde, blu e NIR*.
 
 ``` JavaScript
 // ==============================================
@@ -111,8 +110,11 @@ Export.image.toDrive({
 });
 ```
 
-Per le immagini relative al post incendio è stato invece preso in considerazione il periodo dal **2022-07-31 al 2022-08-31**.
+Per le immagini relative al post incendio è stato invece preso in considerazione il periodo dal **31/07/2022 al 31/08/2022**.
 
+<details>
+<summary>codice JavaScript per le immagine post incendio </summary>
+  
 ``` JavaScript
 // ==============================================
 // Sentinel-2 Surface Reflectance - Cloud Masking and Visualization
@@ -192,8 +194,10 @@ Export.image.toDrive({
   maxPixels: 1e13
 });
 ```
+</details>
 
-## 3. Analisi delle immagini 
+
+## 3. Analisi delle immagini 🖥️
 Una volta scaricate le immagini satellitari queste sono state importate su **R** per poter fare un'analisi dettagliata. 
 
 Per lo studio sono stati usati e caricati in R i seguenti pacchetti: 
@@ -214,11 +218,9 @@ plotRGB(preincendio, r = 1, g = 2, b = 3, stretch = "lin", main = "pre_incendio"
 dev.off() #per chiudere il pannello di visualizzazione delle immagini
 ```
 ![image](https://github.com/user-attachments/assets/cc0f7ce6-2a5c-4342-9ed5-3fd51670301a)
-
 > *L'immagine nelle 4 bande*
 
 ![image](https://github.com/user-attachments/assets/e4cfa80c-f999-4fb1-bc50-b4559a0cb3fc)
-
 > *L'immagine a veri colori*
 
 Lo stesso è stato fatto per l'immagine post incendio. 
@@ -245,13 +247,16 @@ plotRGB(postincendio, r = 1, g = 2, b = 3, stretch = "lin", main = "post_incendi
 dev.off()
 ```
 ![image](https://github.com/user-attachments/assets/14b13df1-2c47-4935-831d-3e6cb5428858)
-> *Le immagini a veri colori pre e post incendio. Nella seconda immagine è chiaramente visibile la zona interessata dall'incendio.*
+> *Le immagini a veri colori pre e post incendio*
+
+> [!NOTE]
+> *Nella seconda immagine è chiaramente visibile la zona interessata dall'incendio in alto a destra.*
 
 E poi un multiframe per le 4 bande.
 
 ```r
 im.multiframe(2,4) 
-plot(preincendio[[1]], col = magma(100), main = "Pre - Banda 1") #si specifica la banda, il colore e il titolo
+plot(preincendio[[1]], col = magma(100), main = "Pre - Banda 1") #viene specificata  la banda, il colore e il titolo
 plot(preincendio [[2]], col = magma(100), main = "Pre - Banda 2")
 plot(preincendio [[3]], col = magma(100), main = "Pre - Banda 3")
 plot(preincendio [[4]], col = magma(100), main = "Pre - Banda 8")
@@ -263,14 +268,16 @@ plot(postincendio [[4]], col = magma(100), main = "Post - Banda 8")
 dev.off()
 ```
 ![image](https://github.com/user-attachments/assets/111fd111-fa4e-42cd-a316-26f9248373d6)
+> [!NOTE]
 > *Anche in questo caso, nella banda 8 corrispondente al NIR si nota la differenza nella zona in alto a destra.*
 
 
-## 4. Indici spaziali 
+## 4. Indici spaziali 🧮
 Per valutare l'impatto dell'incendio sono stati calcolati gli indici **DVI** e **NDVI**. Il primo (Difference Vegetation Index) misura la densità e la biomassa della vegetazione. Più è alto il valore del DVI, più abbondante è la vegetazione. 
 Si calcola come: **DVI = NIR - Red**, dove NIR è la riflettanza nel vicino infrarosso e Red la riflettanza nella banda rossa. 
 Mentre l'NDVI (Normalized Difference Vegetation Index) serve per valutare la salute della vegetazione. 
-Si calcola come: **NDVI= (NIR-Red)/(NIR+Red)**. Valori < 0 rappresentano acque, neve, o superfici artificiali, valori tra 0 e 0.3 indicano aree con scarsa copertura vegetale, valori tra 0.3 e 0.6 corrispondono a praterie, arbusteti o colture agricole in fase di crescita, tra 0.6 e 0.9 indicano foreste dense e rigogliose. 
+Si calcola come: **$` NDVI = \frac{(NIR - Red)}{(NIR + Red)} `$**.
+Valori < 0 rappresentano acque, neve, o superfici artificiali, valori tra 0 e 0.3 indicano aree con scarsa copertura vegetale, valori tra 0.3 e 0.6 corrispondono a praterie, arbusteti o colture agricole in fase di crescita, tra 0.6 e 0.9 indicano foreste dense e rigogliose. 
 
 Per calcolare gli indici in **R** sono state usate le seguenti funzioni provenienti dal pacchetto **imageRy**:
 
@@ -289,7 +296,8 @@ plot(DVIpost, stretch = "lin", main = "DVIpost", col=inferno(100))
 dev.off()
 ```
 ​![image](https://github.com/user-attachments/assets/5870638a-28b7-4ea5-9695-58a2f858c589)
-> *Dall'immagine risulta già una certa differenza specialmente nella zona in altro a destra*
+> [!NOTE]
+> *Dall'immagine risulta già una certa differenza specialmente nella zona in altro a destra.*
 
 Lo stesso è stato fatto per l'**NDVI**
 
@@ -308,7 +316,8 @@ plot(NDVIpost, stretch = "lin", main = "NDVIpost", col=inferno(100))
 dev.off()
 ```
 ![image](https://github.com/user-attachments/assets/e6afb50d-844a-4901-8f36-92a4156524d2)
-> *Anche qui nel post incendio l'immagine diventa più scusa, indice che l'NDVI ha valori più vicini allo 0 e che quindi la vegetazione è stata compromessa*
+>[!NOTE]
+> *Anche qui nel post incendio l'immagine diventa più scura, indice che l'NDVI ha valori più vicini allo 0 e che quindi la vegetazione è stata compromessa.*
 
 Per visualizzare entrambi gli indici, prima e dopo l'incendio è stato creato un pannello multiframe: 
 
@@ -322,7 +331,7 @@ dev.off()
 ```
 ![image](https://github.com/user-attachments/assets/462b4f35-bf8c-4c26-be2d-2def002c4026)
 
-## 5. Analisi multitemporale 
+## 5. Analisi multitemporale ⌛
 Per visualizzare meglio l'impatto dell'incendio è stata calcolata la **differenza tra le immagini del prima e del dopo** per quanto riguarda la **banda del rosso** e i valori di **NDVI**.
 
 ```r
@@ -335,7 +344,8 @@ plot(incendio_diff_ndvi, main = "Incendio: differenza NDVI")
 dev.off()
 ```
 ![image](https://github.com/user-attachments/assets/d8839f29-05d4-401c-809a-f43fdbb1704f)
-> *La seconda immagine mostra chiaramente una macchia di colore diverso in alto a destra, indice di un grande impatto dell'incendio sulla vegetazione*
+>[!NOTE]
+>*La seconda immagine mostra chiaramente una macchia di colore diverso in alto a destra, indice di un grande impatto dell'incendio sulla vegetazione.*
 
 Per visualizzare graficamente la frequenza dei pixel di ogni immagine per ciascun valore di NDVI è stata poi fatta un'**analisi ridgeline** dei valori di **NDVI nel pre e nel post incendio**. Questa permette appunto di creare due **curve di distribuzione** con cui diventa possibile osservare eventuali variazioni nel tempo della frequenza di NDVI.
 
@@ -346,9 +356,9 @@ names(incendio_rl) =c("NDVI_pre", "NDVI_post")  #per creare vettore con i nomi r
 im.ridgeline(incendio_rl, scale=1, palette="viridis")  #per creare grafico ridgelines 
 dev.off()
 ```
-
 ![image](https://github.com/user-attachments/assets/3ccaac6b-fc39-4708-9109-b2ad45fbac25)
-> *Il grafico ridgeline mostra la distribuzione dei valori di NDVI, per quanto riguarda l'andamento prima dell'incendio si vede come i valori di NDVI >0.75 sono molto maggiori rispetto al grafico successivo all'incendio. Nel secondo grafico inoltre aumentano i valori di NDVI più bassi e ciò conferma l'impatto subito*
+>[!NOTE]
+>*Il grafico ridgeline mostra la distribuzione dei valori di NDVI, per quanto riguarda l'andamento prima dell'incendio si vede come i valori di NDVI >0.75 sono molto maggiori rispetto al grafico successivo all'incendio. Nel secondo grafico inoltre aumentano i valori di NDVI più bassi e ciò conferma l'impatto subito.*
 
 Per visualizzare la **variazione percentuale di NDVI** nell'area interessata dall'incendio è stato creato un **grafico a barre** tramite il pacchetto **ggplot2**. Questo permette di suddividere tutti i pixel di ciascuna immagine in **due classi** a seconda dei loro valori, in questo caso valori elevati di NDVI (vegetazione sana) e bassi (vegetazione scarsa/assente), per poi confrontarli graficamente.
 
@@ -363,6 +373,7 @@ plot(preincendio_class - postincendio_class, main = "Differenza NDVI pre e post 
 dev.off()
 ```
 ![image](https://github.com/user-attachments/assets/1d7b8b4b-fe74-4b32-9e90-32c86b6095f0)
+>[!NOTE]
 > *I pixel sono stati suddivisi in due classi (1 e 2), e paragonando queste immagini a quelle NDVI dell'area si vede che la classe 1 corrisponde a valori bassi di NDVI e quella 2 a valori elevati.*
 
 ```r
@@ -396,25 +407,23 @@ ggplotpreincendio + ggplotpostincendio + plot_annotation(title = "Valori NDVI (e
 dev.off()
 ```
 ![image](https://github.com/user-attachments/assets/3abe42f4-5a51-4dc4-83cf-f5d831910ec8)
-> *I valori di NDVI elevati (indici di una vegetazione sana) sono diminuiti nel post incendio rispetto al prima, mentre quelli bassi sono aumentati.*
+>[!NOTE]
+>  *I valori di NDVI elevati (indici di una vegetazione sana) sono diminuiti nel post incendio rispetto al prima, mentre quelli bassi sono aumentati.*
 
-Per capire nel passato più remoto come la vegetazione ha risposto è stata ricavata allo stesso modo un'immagine satellitare dell'area colpita dall'incendio ma un anno dopo (**'2023-07-31', '2023-08-31'**). Replicando le stesse analisi quello che si è ottenuto è che un anno dopo la situazione è tornata simile a quella prima dell'impatto, per alcuni aspetti è anche migliorata. Ciò è dovuto probabilmente al fatto che l'area colpita dall'incendio nel 2022 presentava già una vegetazione secca a causa delle elevate temperature che da molto interessavano la zona. 
+Per capire nel passato più remoto come la vegetazione ha risposto è stata ricavata allo stesso modo un'immagine satellitare dell'area colpita dall'incendio ma un anno dopo (**31/07/2023, 31/08/2023**). Replicando le stesse analisi quello che si è ottenuto è che un anno dopo la situazione è tornata simile a quella prima dell'impatto, per alcuni aspetti è anche migliorata. Ciò è dovuto probabilmente al fatto che l'area colpita dall'incendio nel 2022 presentava già una vegetazione secca a causa delle elevate temperature che da molto interessavano la zona. 
 
 ![image](https://github.com/user-attachments/assets/16e3923d-bf8c-4255-912f-7ebc4ac3b50f)
+>[!NOTE]
 > *Si noti come i valori di NDVI del 2023 siano tornati simili a quelli della situazione pre impatto, se non addirittura aumentati per quanto riguarda i valori elevati (indice di una vegetazione sana) e diminuiti per quanto riguarda quelli bassi (indice di una vegetazione compromessa).*
 
-## 6. Risultati e conclusioni 
+## 6. Risultati e conclusioni ☑️
 Le analisi hanno confermato quanto atteso: l'incendio ha compromesso parte della vegetazione. 
-La visualizzazione delle immagini satelliatri e quelle relative agli indici di vegetazione **DVI** e **NDVI** mostrano chiaramente la zona interessata dall'incendio, caratterizzata da una vegetazione assente e da valori degli indici inferiori. Le piante sane infatti assorbono la luce rossa utilizzata nel processo fotosintetico e riflettono molta luce nell'infrarosso vicino. Quando la vegetazione viene interessata dall'incendio aumenta l'assorbimento nel rosso e diminuisce la riflettanza nel NIR e ciò determina valori inferiori. 
+La visualizzazione delle immagini satelliatri e quelle relative agli indici di vegetazione **DVI** e **NDVI** mostrano chiaramente la zona interessata dall'incendio, caratterizzata da una vegetazione assente e da valori degli indici inferiori. Le piante sane infatti assorbono la luce rossa utilizzata nel processo fotosintetico e riflettono molta luce nell'infrarosso vicino. Quando la vegetazione viene colpita dall'incendio aumenta l'assorbimento nel rosso e diminuisce la riflettanza nel NIR e ciò determina valori inferiori. 
 L'analisi quantitativa ha poi evidenziato come i valori elevati del NIR siano diminuiti **da 80% a 74%** e quelli bassi invece siano aumentati **da 19% a 25%** a seguito dell'incendio.
 
 Il confronto con un'immagine satellitare del 2023, un anno dopo l'incendio, ha comunque mostrato come l'area abbia ripristinato parte della vegetazione e che gli indici spettrali siano tornati come quelli pre incendio e in parte anche migliorati. 
-Questo miglioramento è probabilmente dovuto al fatto che già nei mesi precedenti all'incendio la vegetazione era abbastanza secca oppure al fatto che le specie mettano in atto diverse strategie per rispondere agli impatti. Non tutte sono state infatti danneggiate alla stessa maniera. Quando una specie scompare poi, altre prendono il suo posto all'interno dell'habitat allo scopo di mantenere l'ecosistema. 
+Questo miglioramento è probabilmente dovuto al fatto che già nei mesi precedenti all'incendio la vegetazione era abbastanza secca oppure al fatto che le specie mettano in atto diverse strategie per rispondere agli impatti. Non tutte sono state infatti danneggiate allo stesso modo. Quando una specie scompare poi, altre prendono il suo posto all'interno dell'habitat allo scopo di mantenere l'ecosistema. 
 
 ![image](https://github.com/user-attachments/assets/0906bcae-6576-4ddd-afa4-bf41bb605469)
 
-
-
-
-
-
+### GRAZIE PER L'ATTENZIONE! 
