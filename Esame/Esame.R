@@ -17,17 +17,17 @@ setwd("C:/Users/magda/OneDrive/Documents/UNIBO/telerilevamento/esame/") #imposta
 
 preincendio= rast("preincendio_2022.tif") #per importare e nominare il raster
 plot(preincendio) #per visualizzare l'immagine
-plotRGB(preincendio, r = 1, g = 2, b = 3, stretch = "lin", main = "pre_incendio") #per visualizzare l'immagine a veri colori
+im.plotRGB(preincendio, r = 1, g = 2, b = 3, title = "pre_incendio") #per visualizzare l'immagine a veri colori
 dev.off() #per chiudere il pannello di visualizzazione delle immagini
 
 postincendio= rast("postincendio_2022.tif") 
 plot(postincendio) 
-plotRGB(postincendio, r = 1, g = 2, b = 3, stretch = "lin", main = "post_incendio") 
+im.plotRGB(postincendio, r = 1, g = 2, b = 3, title = "post_incendio") 
 dev.off()
 
 im.multiframe(1,2)  #funzione che apre un pannello multiframe che permette di vedere le 2 immagini una affianco all'altra 
-plotRGB(preincendio, r = 1, g = 2, b = 3, stretch = "lin", main = "pre_incendio")  #prima immagine da inserire nel pannello
-plotRGB(postincendio, r = 1, g = 2, b = 3, stretch = "lin", main = "post_incendio")  #seconda immagine da inserire nel pannello
+im.plotRGB(preincendio, r = 1, g = 2, b = 3, title = "pre_incendio")  #prima immagine da inserire nel pannello
+im.plotRGB(postincendio, r = 1, g = 2, b = 3, title = "post_incendio")  #seconda immagine da inserire nel pannello
 dev.off()
 
 im.multiframe(2,4) 
@@ -190,9 +190,9 @@ post = c(74.30, 25.70)
 post2023 = c(83.02, 16.98)
 tabout = data.frame(NDVI, pre, post, post2023)  
 tabout
-        NDVI         pre            post 
-    1   elevato      80.75          74.30
-    2   basso        19.25          25.70
+        NDVI         pre            post       post2023
+    1   elevato      80.75          74.30      83.01
+    2   basso        19.25          25.70      16.99
 
 ggplotpreincendio = ggplot(tabout, aes(x=NDVI, y=pre, fill=NDVI, color=NDVI)) + geom_bar(stat="identity") + ylim(c(0,100))
 ggplotpostincendio = ggplot(tabout, aes(x=NDVI, y=post, fill=NDVI, color=NDVI)) + geom_bar(stat="identity") + ylim(c(0,100))
