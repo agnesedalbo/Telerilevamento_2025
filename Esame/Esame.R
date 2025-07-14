@@ -161,7 +161,6 @@ preincendio_class = im.classify(NDVIpre, num_clusters=2)
 postincendio_class = im.classify(NDVIpost, num_clusters=2)
 postincendio2023_class = im.classify(NDVIpost2023, num_clusters=2)
 
-
 im.multiframe(2,2)
 plot(preincendio_class, main = "Pixel NDVI pre incendio")
 plot(postincendio_class, main = "Pixel NDVI post incendio")
