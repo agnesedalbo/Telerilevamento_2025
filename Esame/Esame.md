@@ -1,4 +1,4 @@
-## Esame di Telerilevamento Geoecologico in R - 2025
+## Esame di Telerilevamento Geo-Ecologico in R - 2025
 #### Agnese Dal Bò
 > ##### matricola n. 1187303
 
@@ -36,7 +36,7 @@ Per ottenere le immagini dell'area di interesse prima dell'incendio è stato uti
 Tale codice riporta una collezione di immagini che vanno **dal 01/06/2022 al 01/07/2022**, selezionando solo immagini con una *copertura nuvolosa <20%* e le *bande relative al rosso, verde, blu e NIR*.
 
 <details>
-<summary>codice JavaScript per le immagine pre incendio </summary>
+<summary>codice JavaScript per l'immagine pre incendio </summary>
   
 ``` JavaScript
 // ==============================================
@@ -122,7 +122,7 @@ Export.image.toDrive({
 Per le immagini relative al post incendio è stato invece preso in considerazione il periodo dal **31/07/2022 al 31/08/2022**.
 
 <details>
-<summary>codice JavaScript per le immagine post incendio </summary>
+<summary>codice JavaScript per l'immagine post incendio </summary>
   
 ``` JavaScript
 // ==============================================
@@ -261,7 +261,7 @@ dev.off()
 È stato poi creato un pannello multiframe per visualizzare le immagini affiancate.
 
 ```r
-im.multiframe(1,2)  #funzione che apre un pannello multiframe che permette di vedere le 2 immagini una affianco all'altra 
+im.multiframe(1,2)  #funzione che apre un pannello multiframe che permette di vedere le 2 immagini una a fianco all'altra 
 im.plotRGB(preincendio, r = 1, g = 2, b = 3, title = "pre_incendio")  #prima immagine da inserire nel pannello
 im.plotRGB(postincendio, r = 1, g = 2, b = 3, title = "post_incendio")  #seconda immagine da inserire nel pannello
 dev.off()
@@ -279,7 +279,7 @@ E poi un multiframe per le 4 bande.
 
 ```r
 im.multiframe(2,4) 
-plot(preincendio[[1]], col = magma(100), main = "Pre - Banda 1") #viene specificata  la banda, il colore e il titolo
+plot(preincendio[[1]], col = magma(100), main = "Pre - Banda 1") #viene specificata la banda, il colore e il titolo
 plot(preincendio [[2]], col = magma(100), main = "Pre - Banda 2")
 plot(preincendio [[3]], col = magma(100), main = "Pre - Banda 3")
 plot(preincendio [[4]], col = magma(100), main = "Pre - Banda 8")
@@ -468,11 +468,11 @@ Per capire nel passato più remoto come la vegetazione ha risposto è stata rica
 
 ## 6. Risultati e conclusioni ☑️
 Le analisi hanno confermato quanto atteso: l'incendio ha compromesso parte della vegetazione. 
-La visualizzazione delle immagini satelliatri e quelle relative agli indici di vegetazione **DVI** e **NDVI** mostrano chiaramente la zona interessata dall'incendio, caratterizzata da una vegetazione assente e da valori degli indici inferiori. Le piante sane infatti assorbono la luce rossa utilizzata nel processo fotosintetico e riflettono molta luce nell'infrarosso vicino. Quando la vegetazione viene colpita dall'incendio aumenta l'assorbimento nel rosso e diminuisce la riflettanza nel NIR e ciò determina valori inferiori. 
+La visualizzazione delle immagini satellitari e quelle relative agli indici di vegetazione **DVI** e **NDVI** mostrano chiaramente la zona interessata dall'incendio, caratterizzata da una vegetazione assente e da valori degli indici inferiori. Le piante sane infatti assorbono la luce rossa utilizzata nel processo fotosintetico e riflettono molta luce nell'infrarosso vicino. Quando la vegetazione viene colpita dall'incendio aumenta l'assorbimento nel rosso e diminuisce la riflettanza nel NIR e ciò determina valori inferiori. 
 L'analisi quantitativa ha poi evidenziato come i valori elevati del NIR siano diminuiti **da 80% a 74%** e quelli bassi invece siano aumentati **da 19% a 25%** a seguito dell'incendio.
 
 Il confronto con un'immagine satellitare del 2023, un anno dopo l'incendio, ha comunque mostrato come l'area abbia ripristinato parte della vegetazione e che gli indici spettrali siano tornati come quelli pre incendio e in parte anche migliorati. 
-Questo miglioramento è probabilmente dovuto al fatto che già nei mesi precedenti all'incendio la vegetazione era abbastanza secca oppure al fatto che le specie mettano in atto diverse strategie per rispondere agli impatti. Non tutte sono state infatti danneggiate allo stesso modo. Quando una specie scompare poi, altre prendono il suo posto all'interno dell'habitat allo scopo di preservare l'ecosistema. 
+Questo miglioramento è probabilmente dovuto al fatto che già nei mesi precedenti all'incendio la vegetazione era abbastanza secca oppure al fatto che le specie mettono in atto diverse strategie per rispondere agli impatti. Non tutte sono state infatti danneggiate allo stesso modo. Quando una specie scompare poi, altre prendono il suo posto all'interno dell'habitat allo scopo di preservare l'ecosistema. 
 
 I cambiamenti climatici e l'aumento delle temperature porteranno a sempre più incendi in futuro. Capire come la vegetazione colpita risponde a questi fenomeni sarà fondamentale per poter intervenire, prevedere e cercare di ripristinare le aree interessate.
 
