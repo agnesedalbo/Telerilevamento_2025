@@ -469,7 +469,7 @@ Per capire nel passato più remoto come la vegetazione ha risposto è stata rica
 ## 6. Risultati e conclusioni ☑️
 Le analisi hanno confermato quanto atteso: l'incendio ha compromesso parte della vegetazione. 
 La visualizzazione delle immagini satellitari e quelle relative agli indici di vegetazione **DVI** e **NDVI** mostrano chiaramente la zona interessata dall'incendio, caratterizzata da una vegetazione assente e da valori degli indici inferiori. Le piante sane infatti assorbono la luce rossa utilizzata nel processo fotosintetico e riflettono molta luce nell'infrarosso vicino. Quando la vegetazione viene colpita dall'incendio aumenta l'assorbimento nel rosso e diminuisce la riflettanza nel NIR e ciò determina valori inferiori. 
-L'analisi quantitativa ha poi evidenziato come i valori elevati del NIR siano diminuiti **da 80% a 74%** e quelli bassi invece siano aumentati **da 19% a 25%** a seguito dell'incendio.
+L'analisi quantitativa ha poi evidenziato come i valori elevati di NDVI siano diminuiti **da 80% a 74%** e quelli bassi invece siano aumentati **da 19% a 25%** a seguito dell'incendio.
 
 Il confronto con un'immagine satellitare del 2023, un anno dopo l'incendio, ha comunque mostrato come l'area abbia ripristinato parte della vegetazione e che gli indici spettrali siano tornati come quelli pre incendio e in parte anche migliorati. 
 Questo miglioramento è probabilmente dovuto al fatto che già nei mesi precedenti all'incendio la vegetazione era abbastanza secca oppure al fatto che le specie mettono in atto diverse strategie per rispondere agli impatti. Non tutte sono state infatti danneggiate allo stesso modo. Quando una specie scompare poi, altre prendono il suo posto all'interno dell'habitat allo scopo di preservare l'ecosistema. 
